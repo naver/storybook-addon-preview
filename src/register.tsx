@@ -4,6 +4,8 @@ import { addons, types } from "@storybook/addons";
 import { useChannel } from "@storybook/api";
 import { AddonPanel } from "@storybook/components";
 import * as Prism from "prismjs";
+import "prismjs/component/prism-jsx";
+import "prismjs/component/prism-tsx";
 import "prismjs/themes/prism.css";
 import "prismjs/plugins/line-numbers/prism-line-numbers";
 import "prismjs/plugins/line-numbers/prism-line-numbers.css";
@@ -45,7 +47,9 @@ const PreviewPanel = () => {
         if (!el) {
             return;
         }
-        el.innerText = text.trim();
+        const code = text.replace(/</g, "&lt;");
+
+        el.innerHTML = code;
         Prism.highlightElement(el);
     });
 
