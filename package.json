@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-preview",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "./dist/index.js",
   "declaration": "./dist/index.d.ts",
@@ -19,15 +19,15 @@
   },
   "homepage": "https://github.com/daybrush/storybook-addon-preview#readme",
   "dependencies": {
+    "@types/prismjs": "^1.16.0",
+    "prismjs": "^1.17.1"
+  },
+  "devDependencies": {
     "@storybook/addons": "^5.2.6",
     "@storybook/components": "^5.2.6",
     "@types/node": "^12.12.7",
     "@types/react": "^16.9.11",
-    "prismjs": "^1.17.1",
     "react": "^16.11.0",
     "typescript": "^3.7.2"
-  },
-  "devDependencies": {
-    "@types/prismjs": "^1.16.0"
   }
 }

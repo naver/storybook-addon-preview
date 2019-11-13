@@ -45,7 +45,7 @@ const PreviewPanel = () => {
         if (!el) {
             return;
         }
-        el.innerHTML = text.trim();
+        el.innerText = text.trim();
         Prism.highlightElement(el);
     });
 
