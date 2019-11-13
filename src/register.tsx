@@ -47,7 +47,7 @@ const PreviewPanel = () => {
         if (!el) {
             return;
         }
-        const code = text.replace(/</g, "&lt;");
+        const code = text.trim().replace(/</g, "&lt;");
 
         el.innerHTML = code;
         Prism.highlightElement(el);
