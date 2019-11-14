@@ -51,7 +51,7 @@ export function previewTemplate(strings: TemplateStringsArray, ...values: any[])
                     v = quote + v.replace(new RegExp(quote, "g"), "\\\\" + quote) + quote;
                 }
                 
-                objs.push(space(indent) + n + ": " + v  + (i + 1 === length ? lastSeparator : separator));
+                objs.push(space(indent) + n + ": " + v  + (i + 1 === length ? endSeparator : separator));
             });
             objs.push(space(endIndent) + "}");
             return objs.join(joinSeparator);
