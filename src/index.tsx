@@ -8,10 +8,7 @@ export const preview = (parameter: any) => {
 export const withPreview = makeDecorator({
     name: 'withPreview',
     parameterName: 'preview',
-    wrapper: (storyFn, context, { parameters }) => {
-        const channel = addons.getChannel();
-
-        channel.emit("template", parameters);
+    wrapper: (storyFn, context) => {
         return storyFn(context);
     }
 });

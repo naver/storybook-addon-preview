@@ -1,7 +1,7 @@
 import * as React from "react";
 // import { STORY_CHANGED } from '@storybook/core-events';
 import { addons, types } from "@storybook/addons";
-import { useChannel } from "@storybook/api";
+import { useChannel, useParameter } from "@storybook/api";
 import { AddonPanel } from "@storybook/components";
 import * as Prism from "prismjs";
 import "prismjs/components/prism-jsx";
@@ -27,26 +27,20 @@ function getInfo(options, preview) {
     };
 }
 const PreviewPanel = () => {
-    const [options, setOptions] = React.useState({});
     const [preview, setPreview] = React.useState();
+    const options = useParameter("preview", {});
     const codeRef = React.useRef<HTMLElement>();
     const { language, text } = getInfo(options, preview);
 
 
     useChannel({
-        "template": e => {
-            setOptions(e);
-        },
         "preview": e => {
             setPreview(e);
-        }
+        },
     });
 
     React.useEffect(() => {
         const el = codeRef.current;
-        if (!el) {
-            return;
-        }
         const code = text.trim().replace(/</g, "&lt;");
 
         el.innerHTML = code;
@@ -61,6 +55,7 @@ addons.register("daybrush/storyboook-addon-preview", api => {
     addons.add("daybrush/storyboook-addon-preview/panel", {
         title: "Preview",
         type: types.PANEL,
+        paramKey: "preview",
         render: ({ active, key }) => (
             <AddonPanel active={active} key={key} >
                 <PreviewPanel />
