@@ -13,11 +13,40 @@ import "prismjs/plugins/line-numbers/prism-line-numbers.css";
 function getInfo(options, preview) {
     const {
         template,
-        language = "none",
+        language = "javascript",
     } = options;
-    let text = "Update Me";
+    let text = `
+// Update Preview Setting
+import { storiesOf } from '@storybook/react';
+import { withPreview } from "storybook-addon-preview";
+import { withKnobs, boolean } from '@storybook/addon-knobs';
 
-    if (options && options.template && preview) {
+const stories = storiesOf('Storybook Preview', module);
+stories.addDecorator(withKnobs);
+stories.addDecorator(withPreview);
+
+stories.add('story name', () => {
+    const param1 = boolean("param1", false);
+    const param2 = boolean("param2", false);
+
+    return (<div>
+        param1: {param1}<br/>
+        param2: {param2}<br/>
+        </div>);
+}, {
+    preview: {
+    template: ({ param1, param2}) => ${"`"}
+const App = () => (<div>
+param1: ${"$"}{param1}<br/>
+param2: ${"$"}{param2}<br/>
+</div>);${"`"},
+    language: "jsx",
+});
+    `;
+
+    if (typeof template === "string") {
+        text = template;
+    } else if (typeof template === "function" && hasKnobs(preview)) {
         text = template(preview);
     }
 
@@ -26,16 +55,42 @@ function getInfo(options, preview) {
         language,
     };
 }
+
+function hasKnobs(knobs) {
+    const type = typeof knobs;
+
+    if (type === "undefined") {
+        return false;
+    }
+    if (type !== "object") {
+        return true;
+    }
+    if (Array.isArray(knobs)) {
+        return true;
+    }
+    for (const name in knobs) {
+        return true;
+    }
+    return false;
+}
+
 const PreviewPanel = () => {
-    const [preview, setPreview] = React.useState();
+    const [knobs, setKnobs] = React.useState({});
+    const [
+        preview = knobs,
+        setPreview,
+    ] = React.useState();
     const options = useParameter("preview", {});
     const codeRef = React.useRef<HTMLElement>();
     const { language, text } = getInfo(options, preview);
 
-
     useChannel({
         "preview": e => {
             setPreview(e);
+        },
+        "knobs": e => {
+            setPreview(undefined);
+            setKnobs(e);
         },
     });
 
@@ -47,7 +102,9 @@ const PreviewPanel = () => {
         Prism.highlightElement(el);
     });
 
-    return <pre className={`language-${language} line-numbers`}><code ref={codeRef} className={`language-${language} line-numbers`}></code></pre>;
+    return <pre className={`language-${language} line-numbers`} style={{
+        backgroundColor: "transparent",
+    }}><code ref={codeRef} className={`language-${language} line-numbers`}></code></pre>;
 };
 
 
