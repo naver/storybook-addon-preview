@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-preview",
-  "version": "0.1.1",
+  "version": "0.1.5",
   "description": "",
   "main": "./dist/index.js",
   "declaration": "./dist/index.d.ts",
@@ -21,6 +21,7 @@
   "dependencies": {
     "@storybook/addon-knobs": "^5.2.6",
     "@types/prismjs": "^1.16.0",
+    "json-format": "^1.0.1",
     "prismjs": "^1.17.1"
   },
   "devDependencies": {
