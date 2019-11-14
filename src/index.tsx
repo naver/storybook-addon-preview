@@ -16,7 +16,7 @@ export const preview = (parameter: any) => {
 
     channel.emit("preview", parameter);
 }
-export function previewTemplate(strings: string[], ...values: string[]) {
+export function previewTemplate(strings: TemplateStringsArray, ...values: any[]) {
     return new Function(`
         var p = arguments[0];
         var strings = ${JSON.stringify(strings)};
