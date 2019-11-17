@@ -2,6 +2,15 @@ export default {
     dependencies: {
         "svelte": "^3.12.0",
     },
+    "devDependencies": {
+        "npm-run-all": "^4.1.5",
+        "rollup": "^1.10.1",
+        "rollup-plugin-commonjs": "^9.3.4",
+        "rollup-plugin-node-resolve": "^4.2.3",
+        "rollup-plugin-svelte": "^5.0.3",
+        "rollup-plugin-terser": "^4.0.4",
+        "sirv-cli": "^0.3.1"
+    },
     files: {
         "index.js": `
 import App from "./App.svelte";

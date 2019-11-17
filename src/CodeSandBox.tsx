@@ -41,6 +41,7 @@ export function getCodeSandBox(param: { framework: string, files: { [key: string
     const { framework, files = {}, userDependencies = [] } = param;
     const {
         dependencies,
+        devDependencies,
         template,
         files: presetFiles,
     } = presets[framework];
@@ -56,6 +57,11 @@ export function getCodeSandBox(param: { framework: string, files: { [key: string
             },
         },
     };
+    if (devDependencies) {
+        obj["package.json"].content.devDependencies = {
+            ...devDependencies,
+        };
+    }
     const packageDendencies = obj["package.json"].content.dependencies;
     userDependencies.forEach(name => {
         packageDendencies[name] = "latest";
