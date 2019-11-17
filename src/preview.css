@@ -5,6 +5,12 @@
     padding: 0px 16px;
     font-weight: bold;
 }
+.panel form {
+    z-index: 1000;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
 .panel form [type="submit"] {
     position: absolute;
     right: 15px;
@@ -16,4 +22,6 @@
     color: #fff;
     font-weight: bold;
     border-radius: 5px;
+    z-index: 1000;
+    cursor: pointer;
 }
