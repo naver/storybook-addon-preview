@@ -1,12 +1,12 @@
 {
   "name": "storybook-addon-preview",
-  "version": "0.1.6",
+  "version": "0.3.0",
   "description": "",
   "main": "./dist/index.js",
   "declaration": "./dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json && cp src/preview.css dist/preview.css"
   },
   "repository": {
     "type": "git",
@@ -21,8 +21,9 @@
   "dependencies": {
     "@storybook/addon-knobs": "^5.2.6",
     "@types/prismjs": "^1.16.0",
-    "json-format": "^1.0.1",
-    "prismjs": "^1.17.1"
+    "codesandbox": "^2.1.10",
+    "prismjs": "^1.17.1",
+    "react-tabs": "^3.0.0"
   },
   "devDependencies": {
     "@storybook/addons": "^5.2.6",

@@ -1,21 +1,21 @@
 import * as React from "react";
-// import { STORY_CHANGED } from '@storybook/core-events';
 import { addons, types } from "@storybook/addons";
 import { useChannel, useParameter } from "@storybook/api";
 import { AddonPanel } from "@storybook/components";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import 'react-tabs/style/react-tabs.css';
 import * as Prism from "prismjs";
+import "prismjs/components/prism-typescript";
 import "prismjs/components/prism-jsx";
 import "prismjs/components/prism-tsx";
 import "prismjs/themes/prism.css";
 import "prismjs/plugins/line-numbers/prism-line-numbers";
 import "prismjs/plugins/line-numbers/prism-line-numbers.css";
+import "./preview.css";
 
-function getInfo(options, preview) {
-    const {
-        template,
-        language = "javascript",
-    } = options;
-    let text = `
+import CodeSandBox from "./CodeSandBox";
+
+export const DEFAULT_CODE = `
 // Update Preview Setting
 import { storiesOf } from '@storybook/react';
 import { withPreview } from "storybook-addon-preview";
@@ -42,7 +42,16 @@ param2: ${"$"}{param2}<br/>
 </div>);${"`"},
     language: "jsx",
 });
-    `;
+`;
+function getInfo(options, preview) {
+    const {
+        template,
+        description = "",
+        tab = "Code",
+        language = "javascript",
+        codesandbox,
+    } = options;
+    let text = DEFAULT_CODE;
 
     if (typeof template === "string") {
         text = template;
@@ -51,7 +60,10 @@ param2: ${"$"}{param2}<br/>
     }
 
     return {
-        text,
+        codesandbox,
+        description,
+        text: text.trim(),
+        tab,
         language,
     };
 }
@@ -76,41 +88,94 @@ function hasKnobs(knobs) {
 
 const PreviewPanel = () => {
     const [knobs, setKnobs] = React.useState({});
+    const [tabIndex, setTabIndex] = React.useState(0);
     const [
         preview = knobs,
         setPreview,
     ] = React.useState();
+
     const options = useParameter("preview", {});
-    const codeRef = React.useRef<HTMLElement>();
-    const { language, text } = getInfo(options, preview);
+    const panelRef = React.useRef<HTMLDivElement>();
+    const optionsList = [].concat(options);
+    const templates = optionsList.map(o => getInfo(o, preview));
+    const previews = [];
+    const templatesObject = {};
+    
+    templates.forEach(template => {
+        const { tab, codesandbox } = template;
+        if (!templatesObject[tab]) {
+            templatesObject[tab] = [];
+            previews.push({
+                codesandbox,
+                tab,
+                templates: templatesObject[tab],
+            });
+        }
+        templatesObject[tab].push(template);
+    });
+
+    const previewsObject = {};
+    for (const name in templatesObject) {
+        previewsObject[name] = templatesObject[name].map(template => template.text);
+    }
+
 
     useChannel({
         "preview": e => {
             setPreview(e);
         },
         "knobs": e => {
-            setPreview(undefined);
             setKnobs(e);
+            setPreview(undefined);
         },
     });
 
     React.useEffect(() => {
-        const el = codeRef.current;
-        const code = text.trim().replace(/</g, "&lt;");
-
-        el.innerHTML = code;
-        Prism.highlightElement(el);
+        const el = panelRef.current;
+        const p = previews[tabIndex];
+        if (!p) {
+            return;
+        }
+        [].slice.call(el.querySelectorAll("pre code")).forEach((codeElement, i) => {
+            const template = p.templates[i];
+            const text = template.text || "";
+            const code = text.replace(/</g, "&lt;");
+    
+            codeElement.innerHTML = code;
+            Prism.highlightElement(codeElement);
+        });
     });
+    return (
+        <Tabs onSelect={index => {
+            setTabIndex(index);
+        }}>
+            <TabList>
+                {previews.map(({ tab }) => <Tab key={tab}>{tab}</Tab>)}
+            </TabList>
 
-    return <pre className={`language-${language} line-numbers`} style={{
-        backgroundColor: "transparent",
-    }}><code ref={codeRef} className={`language-${language} line-numbers`}></code></pre>;
+            {previews.map(({ codesandbox, tab, templates: previewTemplates }) => {
+                return (<TabPanel key={tab}>                    
+                    <div className="panel" ref={panelRef}>
+                        {codesandbox && <CodeSandBox info={typeof codesandbox === "function" ? codesandbox(previewsObject) : codesandbox} />}
+                        {previewTemplates.map(({ language, description, }, i) => {
+                            return <div className="code-preview" key={i}>
+                                {description && <div className="code-description">{description}</div>}
+                                <pre className={`language-${language} line-numbers`} style={{
+                                    backgroundColor: "transparent",
+                                }}><code className={`language-${language} line-numbers`}></code></pre>
+                            </div>
+                        })}
+                    </div>
+                </TabPanel>);
+            })}
+        </Tabs>
+    );
 };
 
 
 addons.register("daybrush/storyboook-addon-preview", api => {
     addons.add("daybrush/storyboook-addon-preview/panel", {
-        title: "Preview",
+        title: "Code Preview",
         type: types.PANEL,
         paramKey: "preview",
         render: ({ active, key }) => (

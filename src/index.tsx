@@ -1,6 +1,5 @@
 import addons, { makeDecorator } from '@storybook/addons';
 import * as registerKnobs from "@storybook/addon-knobs/dist/registerKnobs";
-import * as jsonFormat from "json-format";
 
 function getKnobs() {
     const knobs = registerKnobs.manager.knobStore.getAll();
@@ -17,6 +16,7 @@ export const preview = (parameter: any) => {
 
     channel.emit("preview", parameter);
 }
+
 export function previewTemplate(strings: TemplateStringsArray, ...values: any[]) {
     return new Function(`
         var p = arguments[0];
@@ -103,6 +103,7 @@ previewTemplate.object = function (props: any[], options: any = {}) {
         endSeparator,
     }, ...props];
 }
+
 export const withPreview = makeDecorator({
     name: 'withPreview',
     parameterName: 'preview',
