@@ -1,6 +1,6 @@
 {
   "name": "storybook-addon-preview",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "",
   "main": "./dist/index.js",
   "declaration": "./dist/index.d.ts",

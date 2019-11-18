@@ -44,7 +44,7 @@ export function previewTemplate(strings: TemplateStringsArray, ...values: any[])
                 var v = p[n];
 
                 if (Array.isArray(v)) {
-                    v = "[" + v.join(", ") + "]";
+                    v = JSON.stringify(v);
                 } else if (typeof v === "object") {
                     v = JSON.stringify(v);
                 } else if (typeof v === "string"){
