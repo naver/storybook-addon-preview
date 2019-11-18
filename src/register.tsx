@@ -49,7 +49,6 @@ function getInfo(options, preview) {
         description = "",
         tab = "Code",
         language = "javascript",
-        codesandbox,
     } = options;
     let text = DEFAULT_CODE;
 
@@ -60,7 +59,7 @@ function getInfo(options, preview) {
     }
 
     return {
-        codesandbox,
+        ...options,
         description,
         text: text.trim(),
         tab,
@@ -136,17 +135,24 @@ const PreviewPanel = () => {
         if (!p) {
             return;
         }
+        let startNumber = 1;
         [].slice.call(el.querySelectorAll("pre code")).forEach((codeElement, i) => {
             const template = p.templates[i];
             const text = template.text || "";
             const code = text.replace(/</g, "&lt;");
-    
+
+            if (!template.continue) {
+                startNumber = 1;
+            }
+            codeElement.parentElement.setAttribute("data-start", startNumber);
             codeElement.innerHTML = code;
+
             Prism.highlightElement(codeElement);
+            startNumber += code.split("\n").length;
         });
     });
     return (
-        <Tabs onSelect={index => {
+        <Tabs className={["react-tabs", "preview-tabs"]}onSelect={index => {
             setTabIndex(index);
         }}>
             <TabList>

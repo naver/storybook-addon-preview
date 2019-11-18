@@ -1,6 +1,6 @@
 export default {
     dependencies: {
-        "svelte": "^3.12.0",
+        "svelte": "^3.12.1",
     },
     "devDependencies": {
         "npm-run-all": "^4.1.5",

@@ -1,8 +1,12 @@
+.preview-tabs {
+    margin-top: 5px;
+}
 .panel {
     position: relative;
+    margin-top: 5px;
 }
 .panel .code-description {
-    padding: 0px 16px;
+    padding: 7px 16px 9px;
     font-weight: bold;
 }
 .panel form {
@@ -24,4 +28,9 @@
     border-radius: 5px;
     z-index: 1000;
     cursor: pointer;
+}
+.panel .code-preview>pre {
+    margin: 0;
+    padding-top: 0;
+    padding-bottom: 0;
 }
