@@ -63,8 +63,11 @@ export function getCodeSandBox(param: { framework: string, files: { [key: string
         };
     }
     const packageDendencies = obj["package.json"].content.dependencies;
-    userDependencies.forEach(name => {
-        packageDendencies[name] = "latest";
+    userDependencies.forEach(userModule => {
+        const result = /^(@*[^@]+)(@[^@/]+)*$/g.exec(userModule);
+        const name = result ? result[1] : userModule;
+        const version = result ? result[2] : "latest";
+        packageDendencies[name] = version;
     });
     if (template) {
         obj["sandbox.config.json"] = {
