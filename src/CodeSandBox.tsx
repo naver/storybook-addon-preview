@@ -66,7 +66,7 @@ export function getCodeSandBox(param: { framework: string, files: { [key: string
     userDependencies.forEach(userModule => {
         const result = /^(@*[^@]+)@*([^@/]+)*$/g.exec(userModule);
         const name = result ? result[1] : userModule;
-        const version = result ? result[2] : "latest";
+        const version = result && result[2] ? result[2] : "latest";
         packageDendencies[name] = version;
     });
     if (template) {
