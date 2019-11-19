@@ -43,13 +43,7 @@ export function previewTemplate(strings: TemplateStringsArray, ...values: any[])
             names.forEach(function (n, i) {
                 var v = p[n];
 
-                if (Array.isArray(v)) {
-                    v = JSON.stringify(v);
-                } else if (typeof v === "object") {
-                    v = JSON.stringify(v);
-                } else if (typeof v === "string"){
-                    v = quote + v.replace(new RegExp(quote, "g"), "\\\\" + quote) + quote;
-                }
+                v = JSON.stringify(v);
                 
                 objs.push(space(indent) + n + ": " + v  + (i + 1 === length ? endSeparator : separator));
             });

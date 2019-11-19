@@ -96,7 +96,17 @@ const PreviewPanel = () => {
     const options = useParameter("preview", {});
     const panelRef = React.useRef<HTMLDivElement>();
     const optionsList = [].concat(options);
-    const templates = optionsList.map(o => getInfo(o, preview));
+    const userKnobs = {...preview};
+
+    optionsList.forEach(o => {
+        const optionKnobs = o.knobs;
+        if (optionKnobs) {
+            for (const name in optionKnobs) {
+                userKnobs[name] = optionKnobs;
+            }
+        }
+    });
+    const templates = optionsList.map(o => getInfo(o, userKnobs));
     const previews = [];
     const templatesObject = {};
     
