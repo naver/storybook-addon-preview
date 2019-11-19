@@ -93,7 +93,9 @@ const PreviewPanel = () => {
         setPreview,
     ] = React.useState();
 
-    const options = useParameter("preview", {});
+    const options = useParameter("preview", {
+        template: "",
+    });
     const panelRef = React.useRef<HTMLDivElement>();
     const optionsList = [].concat(options);
     const userKnobs = {...preview};
@@ -102,11 +104,11 @@ const PreviewPanel = () => {
         const optionKnobs = o.knobs;
         if (optionKnobs) {
             for (const name in optionKnobs) {
-                userKnobs[name] = optionKnobs;
+                userKnobs[name] = optionKnobs[name];
             }
         }
     });
-    const templates = optionsList.map(o => getInfo(o, userKnobs));
+    const templates = optionsList.filter(o => "template" in o).map(o => getInfo(o, userKnobs));
     const previews = [];
     const templatesObject = {};
     
