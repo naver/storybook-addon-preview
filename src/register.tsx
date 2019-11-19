@@ -87,7 +87,7 @@ function hasKnobs(knobs) {
 
 const PreviewPanel = () => {
     const [knobs, setKnobs] = React.useState({});
-    const [tabIndex, setTabIndex] = React.useState(0);
+    const [defaultTabIndex, setTabIndex] = React.useState(0);
     const [
         preview = knobs,
         setPreview,
@@ -117,6 +117,7 @@ const PreviewPanel = () => {
     for (const name in templatesObject) {
         previewsObject[name] = templatesObject[name].map(template => template.text);
     }
+    const tabIndex = Math.min(defaultTabIndex, previews.length);
 
 
     useChannel({
@@ -130,13 +131,17 @@ const PreviewPanel = () => {
     });
 
     React.useEffect(() => {
-        const el = panelRef.current;
+        const panelElement = panelRef.current;
+        const codeElements = [].slice.call(panelElement.querySelectorAll("pre code"));
         const p = previews[tabIndex];
         if (!p) {
+            codeElements.forEach(codeElement => {
+                codeElement.innerHTML = "";
+            });
             return;
         }
         let startNumber = 1;
-        [].slice.call(el.querySelectorAll("pre code")).forEach((codeElement, i) => {
+        codeElements.forEach((codeElement, i) => {
             const template = p.templates[i];
             const text = template.text || "";
             const code = text.replace(/</g, "&lt;");
