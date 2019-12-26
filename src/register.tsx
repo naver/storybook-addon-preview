@@ -15,34 +15,6 @@ import "./preview.css";
 
 import CodeSandBox from "./CodeSandBox";
 
-export const DEFAULT_CODE = `
-// Update Preview Setting
-import { storiesOf } from '@storybook/react';
-import { withPreview } from "storybook-addon-preview";
-import { withKnobs, boolean } from '@storybook/addon-knobs';
-
-const stories = storiesOf('Storybook Preview', module);
-stories.addDecorator(withKnobs);
-stories.addDecorator(withPreview);
-
-stories.add('story name', () => {
-    const param1 = boolean("param1", false);
-    const param2 = boolean("param2", false);
-
-    return (<div>
-        param1: {param1}<br/>
-        param2: {param2}<br/>
-        </div>);
-}, {
-    preview: {
-    template: ({ param1, param2}) => ${"`"}
-const App = () => (<div>
-param1: ${"$"}{param1}<br/>
-param2: ${"$"}{param2}<br/>
-</div>);${"`"},
-    language: "jsx",
-});
-`;
 function getInfo(options, preview) {
     const {
         template,
@@ -50,7 +22,7 @@ function getInfo(options, preview) {
         tab = "Code",
         language = "javascript",
     } = options;
-    let text = DEFAULT_CODE;
+    let text = "";
 
     if (typeof template === "string") {
         text = template;
@@ -93,9 +65,7 @@ const PreviewPanel = () => {
         setPreview,
     ] = React.useState();
 
-    const options = useParameter("preview", {
-        template: "",
-    });
+    const options = useParameter("preview", []);
     const panelRef = React.useRef<HTMLDivElement>();
     const optionsList = [].concat(options);
     const userKnobs = {...preview};
@@ -144,6 +114,10 @@ const PreviewPanel = () => {
 
     React.useEffect(() => {
         const panelElement = panelRef.current;
+
+        if (!panelElement) {
+            return;
+        }
         const codeElements = [].slice.call(panelElement.querySelectorAll("pre code"));
         const p = previews[tabIndex];
         if (!p) {
