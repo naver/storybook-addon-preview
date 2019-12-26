@@ -1,0 +1,1 @@
+export type CodeSandboxTemplate = (previews: object) => object;

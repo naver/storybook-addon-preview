@@ -110,3 +110,5 @@ export const withPreview = makeDecorator({
         return storyFn(context);
     }
 });
+
+export * from "./templates/templates";

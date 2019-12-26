@@ -58,5 +58,16 @@ const inst = new Instance({
 |---|---|---|
 |tab|string|preview can show multiple tab and can determine the name of the tab. If you have the same name, you can show multiple codes on one tab.|
 |template|string, function|Code to display on the screen. If you use knobs, use previewTemplate. If the knobs are not used, they can be represented as strings.|
+|continue|boolean|If the tab name is the same and the code is different, enable true if you want to continue the line number.|
 |lanauge|string|Language to highlight the code in the template (js,ts,jsx,tsx,html,css)|
 |codesandbox|function||
+
+
+### CodeSandBox
+|name|required tabs|
+|----|---|
+|DEFAULT_VANILLA_CODESANDBOX|HTML, CSS, VANILLA|
+|DEFAULT_REACT_CODESANDBOX|React, CSS|
+|DEFAULT_ANGULAR_CODESANDBOX|CSS, Angular(html, component, module)|
+|DEFAULT_VUE_CODESANDBOX|Vue|
+|DEFAULT_SVELTE_CODESANDBOX|Svelte|
