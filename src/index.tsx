@@ -82,8 +82,8 @@ export function previewTemplate(strings: TemplateStringsArray, ...values: any[])
 
 previewTemplate.object = function (props: any[], options: any = {}) {
     const {
-        endIndent = 0,
         indent = 4,
+        endIndent = indent - 4,
         joinSeparator = "\n",
         separator = ",",
         endSeparator = separator,
