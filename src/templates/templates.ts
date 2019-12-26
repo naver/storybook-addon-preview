@@ -31,7 +31,7 @@ return {
     userDependencies: ${joinStrs(dependencies)},
 };`) as CodeSandboxTemplate;
 
-export const ANGULAR_CODESANDBOX = (dependencies: string[]) => new Function(`
+export const DEFAULT_ANGULAR_CODESANDBOX = (dependencies: string[]) => new Function(`
 var previews = arguments[0];
 return {
     framework: "angular",
@@ -43,7 +43,7 @@ return {
     },
     userDependencies: ${joinStrs(dependencies)},
 };`) as CodeSandboxTemplate;
-export const VUE_CODESANDBOX = (dependencies: string[]) => new Function(`
+export const DEFAULT_VUE_CODESANDBOX = (dependencies: string[]) => new Function(`
 var previews = arguments[0];
 return {
     framework: "vue",
@@ -52,7 +52,7 @@ return {
     },
     userDependencies: ${joinStrs(dependencies)},
 };`) as CodeSandboxTemplate;
-export const SVELTE_CODESANDBOX = (dependencies: string[]) => new Function(`
+export const DEFAULT_SVELTE_CODESANDBOX = (dependencies: string[]) => new Function(`
 var previews = arguments[0];
 return {
     framework: "svelte",
