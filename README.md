@@ -4,7 +4,7 @@ Storybook Addon Preview can show user selected [knobs](https://github.com/storyb
 
 
 
-
+스크린샷
 
 
 ### Getting Started
