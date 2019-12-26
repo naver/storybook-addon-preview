@@ -13,10 +13,15 @@
     "url": "git+https://github.com/daybrush/storybook-addon-preview.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/daybrush/storybook-addon-preview/issues"
   },
+  "keywords": [
+    "storybook",
+    "addon",
+    "preview"
+  ],
   "homepage": "https://github.com/daybrush/storybook-addon-preview#readme",
   "dependencies": {
     "@storybook/addon-knobs": "^5.2.6",
