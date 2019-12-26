@@ -1,5 +1,9 @@
 import { CodeSandboxTemplate } from "../types";
 
+
+function joinStrs(strs: string[]) {
+    return `[${strs.map(str => `"${str}"`).join(", ")}]`;
+}
 export const DEFAULT_REACT_CODESANDBOX = (dependencies: string[]) => new Function(`
 var previews = arguments[0];
 return {
@@ -8,7 +12,7 @@ return {
         "src/App.tsx": previews["React"][0],
         "src/styles.css": previews["CSS"][0],
     },
-    userDependencies: [${dependencies.join(", ")}],
+    userDependencies: ${joinStrs(dependencies)},
 };`) as CodeSandboxTemplate;
 export const DEFAULT_VANILLA_CODESANDBOX = (dependencies: string[]) => new Function(`
 var previews = arguments[0];
@@ -24,7 +28,7 @@ return {
         "src/styles.css": previews["CSS"][0],
         "src/index.ts": previews["Vanilla"][0],
     },
-    userDependencies: [${dependencies.join(", ")}],
+    userDependencies: ${joinStrs(dependencies)},
 };`) as CodeSandboxTemplate;
 
 export const ANGULAR_CODESANDBOX = (dependencies: string[]) => new Function(`
@@ -37,7 +41,7 @@ return {
         "src/app/app.component.ts": previews["Angular"][1],
         "src/app/app.module.ts": previews["Angular"][2],
     },
-    userDependencies: [${dependencies.join(", ")}],
+    userDependencies: ${joinStrs(dependencies)},
 };`) as CodeSandboxTemplate;
 export const VUE_CODESANDBOX = (dependencies: string[]) => new Function(`
 var previews = arguments[0];
@@ -46,7 +50,7 @@ return {
     files: {
         "App.vue":  previews["Vue"].join("\n"),
     },
-    userDependencies: [${dependencies.join(", ")}],
+    userDependencies: ${joinStrs(dependencies)},
 };`) as CodeSandboxTemplate;
 export const SVELTE_CODESANDBOX = (dependencies: string[]) => new Function(`
 var previews = arguments[0];
@@ -55,6 +59,6 @@ return {
     files: {
         "App.svelte": previews["Svelte"].join("\n"),
     },
-    userDependencies: [${dependencies.join(", ")}],
+    userDependencies: ${joinStrs(dependencies)},
 };`) as CodeSandboxTemplate;
 
