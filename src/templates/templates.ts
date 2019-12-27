@@ -48,7 +48,7 @@ var previews = arguments[0];
 return {
     framework: "vue",
     files: {
-        "App.vue":  previews["Vue"].join("\n"),
+        "App.vue":  previews["Vue"].join("\\n"),
     },
     userDependencies: ${joinStrs(dependencies)},
 };`) as CodeSandboxTemplate;
@@ -57,7 +57,7 @@ var previews = arguments[0];
 return {
     framework: "svelte",
     files: {
-        "App.svelte": previews["Svelte"].join("\n"),
+        "App.svelte": previews["Svelte"].join("\\n"),
     },
     userDependencies: ${joinStrs(dependencies)},
 };`) as CodeSandboxTemplate;
