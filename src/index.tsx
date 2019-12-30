@@ -111,5 +111,5 @@ export const withPreview = makeDecorator({
     }
 });
 export * from "./code/consts";
-export { previewFunction } from "./code/utils";
+export { previewFunction, codeIndent, convertGlobalCSS } from "./code/utils";
 export * from "./templates/templates";

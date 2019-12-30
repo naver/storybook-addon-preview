@@ -81,3 +81,9 @@ export function codeIndent(text: string, {
         return space(i === 0 ? startIndent : (i === length - 1 ? endIndet : indent)) + t;
     }).join("\n");
 }
+
+export function convertGlobalCSS(text: string, targets: string[]) {
+    return text.replace(new RegExp(`(${targets.map(target => {
+        return target.replace(/\./g, "\\.");
+    }).join("|")})`, "g"), ":global($1)");
+}
