@@ -10,9 +10,7 @@ function replaceOnce(func: string, regx: RegExp, callback: (...args: any[]) => s
         return callback(all, ...args);
     })
 }
-function removeBracket(text: string) {
-    return /\{|\}|\,/g.exec(text) ? text : text.replace(/\(|\)/g, "");
-}
+
 export function removeThis(func: string) {
     return func.replace(/this\./g, "");
 }
@@ -20,10 +18,10 @@ export function toArrow(func: string) {
     return removeThis(toClassArrow(func));
 }
 export function toClassArrow(func: string) {
-    return replaceOnce(func, /function ([^(]+)([^)]+\))/g, (_, a1, a2) => `${removeBracket(a2)} =>`);
+    return replaceOnce(func, /function ([^(]+)([^)]+\))/g, (_, a1, a2) => `${a2} =>`);
 }
 export function toArrowMethod(func: string) {
-    return replaceOnce(func, /function ([^(]+)([^)]+\))/g, (_, a1, a2) => `${a1} = ${removeBracket(a2)} =>`);
+    return replaceOnce(func, /function ([^(]+)([^)]+\))/g, (_, a1, a2) => `${a1} = ${a2} =>`);
 }
 export function toMethod(func: string) {
     return func.replace("function ", "");
@@ -36,6 +34,11 @@ export function toSvelte(func: string) {
             return `() ${a2 || ""}{`;
         }
     }));
+}
+export function removeBracket(func: string) {
+    return replaceOnce(func, /(\([^)]+\))\s?=>\s?\{/g, (all, a1) => {
+        return /\{|\}|\,/g.exec(a1) ? all : `${a1.replace(/\(|\)/g, "")} => {`;
+    });
 }
 
 export function includeComment(func: string, comment: string, external: string = "") {
@@ -51,15 +54,15 @@ export function convertFunction(func: string, type: CODE_TYPE, comment: string) 
         case CODE_TYPE.FUNCTION:
             return removeThis(func);
         case CODE_TYPE.ARROW:
-            return toArrow(func);
+            return removeBracket(toArrow(func));
         case CODE_TYPE.CLASS_ARROW:
-            return includeComment(toClassArrow(func), "method", comment);
+            return includeComment(removeBracket(toClassArrow(func)), "method", comment);
         case CODE_TYPE.ARROW_METHOD:
-            return includeComment(toArrowMethod(func), "method", comment);
+            return includeComment(removeBracket(toArrowMethod(func)), "method", comment);
         case CODE_TYPE.METHOD:
             return includeComment(toMethod(func), "method", comment);
         case CODE_TYPE.SVELTE_ARROW:
-            return toSvelte(toArrow(func));
+            return removeBracket(toSvelte(toArrow(func)));
         case CODE_TYPE.SVELTE_FUNCTION:
             return toSvelte(func);
         default:
