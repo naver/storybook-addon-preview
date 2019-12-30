@@ -48,7 +48,7 @@ var previews = arguments[0];
 return {
     framework: "vue",
     files: {
-        "App.vue":  previews["Vue"].join("\\n"),
+        "src/App.vue":  previews["Vue"].join("\\n"),
     },
     userDependencies: ${joinStrs(dependencies)},
 };`) as CodeSandboxTemplate;
