@@ -110,5 +110,6 @@ export const withPreview = makeDecorator({
         return storyFn(context);
     }
 });
-
+export * from "./code/consts";
+export { previewFunction } from "./code/utils";
 export * from "./templates/templates";
