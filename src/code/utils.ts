@@ -19,9 +19,9 @@ export function toMethod(func: string) {
 export function toSvelte(func: string) {
     return removeThis(func.replace(/\(([^)]*)\) (=>\s)?\{/g, (_, a1, a2) => {
         if (a1) {
-            return `({ detail: ${a1} }) ${a2}{`;
+            return `({ detail: ${a1} }) ${a2 || ""}{`;
         } else {
-            return `() ${a2}{`;
+            return `() ${a2 || ""}{`;
         }
     }));
 }
