@@ -69,9 +69,7 @@ export function previewTemplate(strings: TemplateStringsArray, ...values: any[])
                 value = p[name];
             }
 
-            if (Array.isArray(value)) {
-                value = "[" + value.join(", ") + "]";
-            } else if (typeof value === "object") {
+            if (typeof value === "object") {
                 value = JSON.stringify(value);
             }
             return "" + prev + next  + value;
