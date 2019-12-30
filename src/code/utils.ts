@@ -1,23 +1,35 @@
 import { CODE_TYPE } from "./consts";
 
-
+function replaceOnce(func: string, regx: RegExp, callback: (...args: any[]) => string) {
+    let isFirst = true;
+    return func.replace(regx, (all: string, ...args: any[]) => {
+        if (!isFirst) {
+            return all;
+        }
+        isFirst = false;
+        return callback(all, ...args);
+    })
+}
+function removeBracket(text: string) {
+    return /\{|\}|\,/g.exec(text) ? text : text.replace(/\(|\)/g, "");
+}
 export function removeThis(func: string) {
     return func.replace(/this\./g, "");
 }
 export function toArrow(func: string) {
-    return removeThis(func.replace(/function ([^(]+)([^)]+\))/g, "$2 =>"));
+    return removeThis(toClassArrow(func));
 }
 export function toClassArrow(func: string) {
-    return func.replace(/function ([^(]+)([^)]+\))/g, "$2 =>");
+    return replaceOnce(func, /function ([^(]+)([^)]+\))/g, (_, a1, a2) => `${removeBracket(a2)} =>`);
 }
 export function toArrowMethod(func: string) {
-    return func.replace(/function ([^(]+)([^)]+\))/g, "$1 = $2 =>");
+    return replaceOnce(func, /function ([^(]+)([^)]+\))/g, (_, a1, a2) => `${a1} = ${removeBracket(a2)} =>`);
 }
 export function toMethod(func: string) {
-    return func.replace(/function /g, "");
+    return func.replace("function ", "");
 }
 export function toSvelte(func: string) {
-    return removeThis(func.replace(/\(([^)]*)\) (=>\s)?\{/g, (_, a1, a2) => {
+    return removeThis(replaceOnce(func, /\(([^)]*)\) (=>\s)?\{/g, (_, a1, a2) => {
         if (a1) {
             return `({ detail: ${a1} }) ${a2 || ""}{`;
         } else {
