@@ -36,6 +36,8 @@ export function includeComment(func: string, comment: string, external: string =
 }
 export function convertFunction(func: string, type: CODE_TYPE, comment: string) {
     switch (type) {
+        case CODE_TYPE.FUNCTION:
+            return removeThis(func);
         case CODE_TYPE.ARROW:
             return toArrow(func);
         case CODE_TYPE.CLASS_ARROW:
