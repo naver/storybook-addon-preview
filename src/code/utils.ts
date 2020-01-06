@@ -26,7 +26,7 @@ export function toArrowMethod(func: string) {
 export function toMethod(func: string) {
     return func.replace("function ", "");
 }
-export function toSvelte(func: string) {
+export function toCustomEvent(func: string) {
     return removeThis(replaceOnce(func, /\(([^)]*)\) (=>\s)?\{/g, (_, a1, a2) => {
         if (a1) {
             return `({ detail: ${a1} }) ${a2 || ""}{`;
@@ -61,10 +61,14 @@ export function convertFunction(func: string, type: CODE_TYPE, comment: string) 
             return includeComment(removeBracket(toArrowMethod(func)), "method", comment);
         case CODE_TYPE.METHOD:
             return includeComment(toMethod(func), "method", comment);
-        case CODE_TYPE.SVELTE_ARROW:
-            return removeBracket(toSvelte(toArrow(func)));
-        case CODE_TYPE.SVELTE_FUNCTION:
-            return toSvelte(func);
+        case CODE_TYPE.CUSTOM_EVENT_ARROW:
+            return removeBracket(toCustomEvent(toArrow(func)));
+        case CODE_TYPE.CUSTOM_EVENT_FUNCTION:
+            return toCustomEvent(func);
+        case CODE_TYPE.CUSTOM_EVENT_CLASS_ARROW:
+            return includeComment(removeBracket(toCustomEvent(toClassArrow(func))), "method", comment);
+        case CODE_TYPE.CUSTOM_EVENT_ARROW_METHOD:
+            return includeComment(removeBracket(toCustomEvent(toArrowMethod(func))), "method", comment);
         default:
             return func;
     }
