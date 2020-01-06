@@ -2,12 +2,14 @@ import * as React from "react";
 import { getParameters } from "codesandbox/lib/api/define";
 import PRESET_ANGULAR from "./presets/Angular";
 import PRESET_REACT from "./presets/React";
+import PRESET_PREACT from "./presets/Preact";
 import PRESET_VUE from "./presets/Vue";
 import PRESET_SVELTE from "./presets/Svelte";
 
 
 const presets = {
     "react": PRESET_REACT,
+    "preact": PRESET_PREACT,
     "angular": PRESET_ANGULAR,
     "svelte": PRESET_SVELTE,
     "vue": PRESET_VUE,
