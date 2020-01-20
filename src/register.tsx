@@ -14,6 +14,7 @@ import "prismjs/plugins/line-numbers/prism-line-numbers.css";
 import "./preview.css";
 
 import CodeSandBox from "./CodeSandBox";
+import CopyButton from "./CopyButton";
 
 function getInfo(options, preview) {
     const {
@@ -112,6 +113,29 @@ const PreviewPanel = () => {
         },
     });
 
+    const onCopyText = (tab: number, index: number) => {
+        const preview = previews[tab];
+
+        if (!preview) {
+            return "";
+        }
+        const templates = preview.templates.slice(index);
+        const texts: string[] = [];
+
+        templates.every((template, i) => {
+            if (i > 0 && !template.continue) {
+                return false;
+            }
+            const text = template.text;
+
+            if (text) {
+                texts.push(text);
+            }
+            return true;
+        });
+
+        return texts.join("\n");
+    };
     React.useEffect(() => {
         const panelElement = panelRef.current;
 
@@ -127,6 +151,7 @@ const PreviewPanel = () => {
             return;
         }
         let startNumber = 1;
+
         codeElements.forEach((codeElement, i) => {
             const template = p.templates[i];
             const text = template.text || "";
@@ -150,12 +175,13 @@ const PreviewPanel = () => {
                 {previews.map(({ tab }) => <Tab key={tab}>{tab}</Tab>)}
             </TabList>
 
-            {previews.map(({ codesandbox, tab, templates: previewTemplates }) => {
+            {previews.map(({ codesandbox, tab, templates: previewTemplates }, i) => {
                 return (<TabPanel key={tab}>                    
                     <div className="panel" ref={panelRef}>
                         {codesandbox && <CodeSandBox info={typeof codesandbox === "function" ? codesandbox(previewsObject) : codesandbox} />}
-                        {previewTemplates.map(({ language, description, }, i) => {
-                            return <div className="code-preview" key={i}>
+                        {previewTemplates.map(({ language, description, copy }, j) => {
+                            return <div className="code-preview" key={j}>
+                                {copy && <CopyButton tab={i} index={j} onCopyText={onCopyText} />}
                                 {description && <div className="code-description">{description}</div>}
                                 <pre className={`language-${language} line-numbers`} style={{
                                     backgroundColor: "transparent",

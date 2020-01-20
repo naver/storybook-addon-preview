@@ -15,7 +15,7 @@
     top: 0;
     right: 0;
 }
-.panel form [type="submit"] {
+.panel form [type="submit"], .panel .preview-copy {
     position: absolute;
     right: 15px;
     top: 0px;
@@ -28,6 +28,17 @@
     border-radius: 5px;
     z-index: 1000;
     cursor: pointer;
+    overflow: hidden;
+}
+.panel .preview-copy textarea {
+    position: absolute;
+    right: 100%;
+}
+.panel .code-preview {
+    position: relative;
+}
+.panel form+.code-preview>.preview-copy {
+    right: 130px;
 }
 .panel .code-preview>pre {
     margin: 0;
