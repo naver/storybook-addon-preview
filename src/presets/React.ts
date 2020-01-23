@@ -2,6 +2,8 @@ export default {
     dependencies: {
         react: "^16.8.0",
         "react-dom": "^16.8.0",
+        "@types/react": "^16.8.0",
+        "@types/react-dom": "^16.8.0",
         "react-scripts": "^2.1.0",
     },
     template: "create-react-app-typescript",

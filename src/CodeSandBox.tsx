@@ -5,6 +5,7 @@ import PRESET_REACT from "./presets/React";
 import PRESET_PREACT from "./presets/Preact";
 import PRESET_VUE from "./presets/Vue";
 import PRESET_SVELTE from "./presets/Svelte";
+import PRESET_LIT from "./presets/Lit";
 
 
 const presets = {
@@ -13,9 +14,11 @@ const presets = {
     "angular": PRESET_ANGULAR,
     "svelte": PRESET_SVELTE,
     "vue": PRESET_VUE,
+    "lit": PRESET_LIT,
     "vanilla": {
         template: "parcel",
     },
+    
 };
 export function previewCodeSandBoxHTML(params: {
     html: string,
