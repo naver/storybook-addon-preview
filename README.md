@@ -74,7 +74,7 @@ There is a dependency and initial settings file for linking code sandboxes.
 The frameworks we support are react, angular, svelte, lit, preact, and vue.
 
 ```js
-const CODESANDBOX_FUNCTION = (previews) => ({
+const CodeSandboxTemplate = (previews) => ({
     // react, angular, svelte, lit, preact, vue
     framework: "FRAMEWORK_TYPE",
       files: {
@@ -88,7 +88,29 @@ const CODESANDBOX_FUNCTION = (previews) => ({
 ```
 
 #### You can use the default codesandbox presets.
-```js
+* External modules except framework modules used in code
+
+```ts
+type DEFAULT_****_CODESANDBOX = (dependencies: string[]) => CodeSandboxTemplate;
+```
+
+* The codesandbox presets provided in the preview are vanilla, react, angular, vue, preact, lit and svelte.
+
+|Name|Required Tab Names|Code|
+|----|---|---|
+|DEFAULT_VANILLAJS_CODESANDBOX(JS)|HTML, CSS, VANILLA|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/VanillaJS.ts)|
+|DEFAULT_VANILLA_CODESANDBOX(TS)|HTML, CSS, VANILLA|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Vanilla.ts)|
+|DEFAULT_REACT_CODESANDBOX(TS)|React, CSS|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/React.ts)
+|DEFAULT_ANGULAR_CODESANDBOX|CSS, Angular(html, component, module)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Angular.ts)|
+|DEFAULT_VUE_CODESANDBOX|Vue|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Vue.ts)|
+|DEFAULT_SVELTE_CODESANDBOX|Svelte|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Svelte.ts)|
+|DEFAULT_LIT_CODESANDBOX|Lit|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Lit.ts)|
+
+
+#### The following explains how to use the default codesandbox preset.
+
+
+```ts
 import {
     DEFAULT_VANILLA_CODESANDBOX,
     DEFAULT_REACT_CODESANDBOX,
@@ -97,6 +119,11 @@ import {
 
 {
     preview: [
+        {
+            // previews["HTML"][0]
+            tab: "HTML",
+            template: ...,
+        },
         {
             // previews["CSS"][0]
             tab: "CSS",
@@ -142,15 +169,6 @@ import {
 }
 ```
 
-|Name|Required Tab Names|Code|
-|----|---|---|
-|DEFAULT_VANILLAJS_CODESANDBOX(JS)|HTML, CSS, VANILLA|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/VanillaJS.ts)|
-|DEFAULT_VANILLA_CODESANDBOX(TS)|HTML, CSS, VANILLA|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Vanilla.ts)|
-|DEFAULT_REACT_CODESANDBOX(TS)|React, CSS|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/React.ts)
-|DEFAULT_ANGULAR_CODESANDBOX|CSS, Angular(html, component, module)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Angular.ts)|
-|DEFAULT_VUE_CODESANDBOX|Vue|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Vue.ts)|
-|DEFAULT_SVELTE_CODESANDBOX|Svelte|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Svelte.ts)|
-|DEFAULT_LIT_CODESANDBOX|Lit|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Lit.ts)|
 
 
 
