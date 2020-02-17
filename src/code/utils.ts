@@ -42,7 +42,7 @@ export function removeBracket(func: string) {
 }
 
 export function includeComment(func: string, comment: string, external: string = "") {
-    return func.replace(new RegExp(`\\\/\\\/${comment}(?:-([^\\\s]*))*\\\s`, "g"), function (all, type) {
+    return func.replace(new RegExp(`\\\/\\\/${comment}(?:-([^\\\s]*))*\\\s`, "g"), (all, type) => {
         if ((type && external && type.indexOf(external) > -1)) {
             return all;
         }
@@ -84,8 +84,8 @@ export function previewFunction(func: string) {
     };
 }
 export function space(indent) {
-    var texts: string[] = [];
-    for (var i = 0; i < indent; ++i) {
+    const texts: string[] = [];
+    for (let i = 0; i < indent; ++i) {
         texts.push(" ");
     }
     return texts.join("");

@@ -1,4 +1,4 @@
-export default {
+export const VUE_PRESET =  {
     dependencies: {
         "vue": "^2.6.0",
     },

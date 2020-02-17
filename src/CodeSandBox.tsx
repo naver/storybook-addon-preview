@@ -1,24 +1,22 @@
 import * as React from "react";
 import { getParameters } from "codesandbox/lib/api/define";
-import PRESET_ANGULAR from "./presets/Angular";
-import PRESET_REACT from "./presets/React";
-import PRESET_PREACT from "./presets/Preact";
-import PRESET_VUE from "./presets/Vue";
-import PRESET_SVELTE from "./presets/Svelte";
-import PRESET_LIT from "./presets/Lit";
+import { VANILLA_PRESET } from "./presets/Vanilla";
+import { REACT_PRESET } from "./presets/React";
+import { PREACT_PRESET } from "./presets/Preact";
+import { ANGULAR_PRESET } from "./presets/Angular";
+import { SVELTE_PRESET } from "./presets/Svelte";
+import { VUE_PRESET } from "./presets/Vue";
+import { LIT_PRESET } from "./presets/Lit";
 
 
 const presets = {
-    "react": PRESET_REACT,
-    "preact": PRESET_PREACT,
-    "angular": PRESET_ANGULAR,
-    "svelte": PRESET_SVELTE,
-    "vue": PRESET_VUE,
-    "lit": PRESET_LIT,
-    "vanilla": {
-        template: "parcel",
-    },
-    
+    "react": REACT_PRESET,
+    "preact": PREACT_PRESET,
+    "angular": ANGULAR_PRESET,
+    "svelte": SVELTE_PRESET,
+    "vue": VUE_PRESET,
+    "lit": LIT_PRESET,
+    "vanilla": VANILLA_PRESET,
 };
 export function previewCodeSandBoxHTML(params: {
     html: string,
@@ -90,9 +88,9 @@ export function getCodeSandBox(param: { framework: string, files: { [key: string
         let content = files[fileName];
 
         if (typeof content === "object") {
-            const template = content.template;
+            const contentTemplate = content.template;
 
-            if (template === "html") {
+            if (contentTemplate === "html") {
                 content = previewCodeSandBoxHTML(content);
             }
         }

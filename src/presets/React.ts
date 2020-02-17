@@ -1,4 +1,4 @@
-export default {
+export const REACT_PRESET =  {
     dependencies: {
         react: "^16.8.0",
         "react-dom": "^16.8.0",

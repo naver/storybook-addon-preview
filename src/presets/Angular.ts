@@ -1,4 +1,4 @@
-export default {
+export const ANGULAR_PRESET =  {
     dependencies: {
         "@angular/common": "^8.0.0",
         "@angular/animations": "^8.0.0",

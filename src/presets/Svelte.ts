@@ -1,4 +1,4 @@
-export default {
+export const SVELTE_PRESET =  {
     dependencies: {
         "svelte": "^3.16.1",
     },

@@ -1,4 +1,4 @@
-export default {
+export const LIT_PRESET =  {
     dependencies: {
         "lit-element": "latest",
         "lit-html": "latest",
