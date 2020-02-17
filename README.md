@@ -4,7 +4,8 @@ Storybook Addon Preview can show user selected [knobs](https://github.com/storyb
 
 
 
-![](./images/screenshot.png)
+[![](./images/screenshot.png)](https://naver.github.io/egjs-infinitegrid/storybook/)
+
 ## Getting Started
 First of all, you need to install Knobs into your project as a dev dependency.
 
@@ -14,7 +15,7 @@ npm i storybook-addon-preview --dev
 ```
 
 
-addons.js
+.storybook/addons.js
 
 ```js
 import "storybook-addon-preview/register";
@@ -47,11 +48,14 @@ const inst = new Instance({
             `,
             language: "ts",
             copy: true,
-            codesandbox: DEFAULT_VANILLA_CODESANDBOX,
+            codesandbox: DEFAULT_VANILLA_CODESANDBOX(["@egjs/infinitegrid"]),
         },
     ]
 });
 ```
+
+
+[InfiniteGrid's Storybook Example](https://github.com/naver/egjs-infinitegrid/blob/master/storybook/stories/templates/story.template.tsx)
 ### Properties
 
 |Name|Type|Description|
@@ -59,7 +63,7 @@ const inst = new Instance({
 |tab|string|preview can show multiple tab and can determine the name of the tab. If you have the same name, you can show multiple codes on one tab.|
 |template|string, function|Code to display on the screen. If you use knobs, use previewTemplate. If the knobs are not used, they can be represented as strings.|
 |continue|boolean|If the tab name is the same and the code is different, enable true if you want to continue the line number.|
-|lanauge|string|Language to highlight the code in the template (js,ts,jsx,tsx,html,css)|
+|lanauge|string|Language to highlight the code in the template (js, ts, jsx, tsx, html, css)|
 |codesandbox|function|Link the code you used to the code sandbox.|
 |copy|boolean|Whether to show the copy code button|
 
@@ -84,6 +88,54 @@ const CODESANDBOX_FUNCTION = (previews) => ({
 ```
 
 #### You can use the default codesandbox presets.
+```js
+import {
+    DEFAULT_VANILLA_CODESANDBOX,
+    DEFAULT_REACT_CODESANDBOX,
+    DEFAULT_ANGULAR_CODESANDBOX,
+} from "storybook-addon-preview";
+
+{
+    preview: [
+        {
+            tab: "CSS",
+            template: ...,
+        },
+        {
+            tab: "Vanilla",
+            template: ...,
+            codesandbox: DEFAULT_REACT_CODESANDBOX(["@egjs/infinitegrid"]),
+        }
+        {
+            tab: "React",
+            template: ...,
+            codesandbox: DEFAULT_REACT_CODESANDBOX(["@egjs/react-infinitegrid"]),
+        },
+        {
+            tab: "Angular",
+            description: "app.component.html",
+            template: ...,
+            language: "markup",
+            codesandbox: DEFAULT_ANGULAR_CODESANDBOX(["@egjs/ngx-infinitegrid"]),
+        },
+
+        {
+            tab: "Angular",
+            description: "app.component.ts",
+            template: ...,
+            language: "tsx",
+            codesandbox: DEFAULT_ANGULAR_CODESANDBOX(["@egjs/ngx-infinitegrid"]),
+        },
+        {
+            tab: "Angular",
+            description: "app.module.ts",
+            template: ...,
+            language: "typescript",
+            codesandbox: DEFAULT_ANGULAR_CODESANDBOX(["@egjs/ngx-infinitegrid"]),
+        },
+    ],
+}
+```
 
 |Name|Required Tab Names|Code|
 |----|---|---|
@@ -99,7 +151,7 @@ const CODESANDBOX_FUNCTION = (previews) => ({
 
 
 ## License
-`storybook-addon-preview` is released under the [MIT license](https://raw.githubusercontent.com/naver/egjs/master/LICENSE.txt).
+**storybook-addon-preview** is released under the [MIT license](https://raw.githubusercontent.com/naver/egjs/master/LICENSE.txt).
 
 
 ```
