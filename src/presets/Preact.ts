@@ -6,7 +6,8 @@ export const PREACT_PRESET =  {
     files: {
         "src/index.js": `import { Component, h, render } from "preact";
 import App from "./App";
-import "./App.css";
+import "./styles.css";
+
 render(<App />, document.querySelector("#root"));
 `,
     },
