@@ -98,28 +98,32 @@ import {
 {
     preview: [
         {
+            // previews["CSS"][0]
             tab: "CSS",
             template: ...,
         },
         {
+            // previews["Vaniila"][0]
             tab: "Vanilla",
             template: ...,
             codesandbox: DEFAULT_REACT_CODESANDBOX(["@egjs/infinitegrid"]),
         }
         {
+            // previews["React"][0]
             tab: "React",
             template: ...,
             codesandbox: DEFAULT_REACT_CODESANDBOX(["@egjs/react-infinitegrid"]),
         },
         {
+            // previews["Angular"][0]
             tab: "Angular",
             description: "app.component.html",
             template: ...,
             language: "markup",
             codesandbox: DEFAULT_ANGULAR_CODESANDBOX(["@egjs/ngx-infinitegrid"]),
         },
-
         {
+            // previews["Angular"][1]
             tab: "Angular",
             description: "app.component.ts",
             template: ...,
@@ -127,6 +131,7 @@ import {
             codesandbox: DEFAULT_ANGULAR_CODESANDBOX(["@egjs/ngx-infinitegrid"]),
         },
         {
+            // previews["Angular"][2]
             tab: "Angular",
             description: "app.module.ts",
             template: ...,
