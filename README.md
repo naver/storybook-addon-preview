@@ -1,13 +1,11 @@
-## Storybook Addon Preview
+# Storybook Addon Preview
 
 Storybook Addon Preview can show user selected [knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs) in various framework code in [Storybook](https://storybook.js.org/)
 
 
 
-스크린샷
-
-
-### Getting Started
+![](./images/screenshot.png)
+## Getting Started
 First of all, you need to install Knobs into your project as a dev dependency.
 
 
@@ -63,6 +61,7 @@ const inst = new Instance({
 |continue|boolean|If the tab name is the same and the code is different, enable true if you want to continue the line number.|
 |lanauge|string|Language to highlight the code in the template (js,ts,jsx,tsx,html,css)|
 |codesandbox|function|Link the code you used to the code sandbox.|
+|copy|boolean|Whether to show the copy code button|
 
 
 ### CodeSandBox
@@ -95,3 +94,32 @@ const CODESANDBOX_FUNCTION = (previews) => ({
 |DEFAULT_VUE_CODESANDBOX|Vue|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Vue.ts)|
 |DEFAULT_SVELTE_CODESANDBOX|Svelte|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Svelte.ts)|
 |DEFAULT_LIT_CODESANDBOX|Lit|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Lit.ts)|
+
+
+
+
+## License
+`storybook-addon-preview` is released under the [MIT license](https://raw.githubusercontent.com/naver/egjs/master/LICENSE.txt).
+
+
+```
+Copyright (c) 2020-present NAVER Corp.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+```
