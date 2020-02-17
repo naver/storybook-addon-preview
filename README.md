@@ -118,7 +118,10 @@ const CodeSandboxTemplate = (previews) => ({
 * External modules except framework modules used in code
 
 ```ts
-type DEFAULT_****_CODESANDBOX = (dependencies: string[]) => CodeSandboxTemplate;
+// DEFAULT_(VANILLA)_CODESANDBOX
+// DEFAULT_(REACT)_CODESANDBOX
+// DEFAULT_(ANGULAR)_CODESANDBOX
+type DEFAULT_FRAMEWORK_CODESANDBOX = (dependencies: string[]) => CodeSandboxTemplate;
 ```
 
 * The codesandbox presets provided in the preview are vanilla, react, angular, vue, preact, lit and svelte.
