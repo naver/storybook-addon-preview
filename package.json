@@ -36,6 +36,7 @@
     "@types/node": "^12.12.7",
     "@types/react": "^16.9.11",
     "react": "^16.11.0",
+    "tslint": "^6.0.0",
     "typescript": "^3.7.2"
   }
 }
