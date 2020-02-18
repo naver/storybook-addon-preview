@@ -61,7 +61,12 @@ const inst = new Instance({
 * If the template is code that does not use knobs, you can just write it as `string` type.
 ```js
 {
-    template: ``,
+    template: `
+const inst = new Instance({
+    opt1: 1,
+    num1: 1,
+});
+`,
 }
 ```
 * If you simply want to express knobs as they are, use `previewTemplate` function
@@ -70,7 +75,10 @@ import { previewTemplate } from "storybook-addon-preview";
 
 {
     template: previewTemplate`
-
+const inst = new Instance({
+    opt1: ${"opt1"},
+    num1: ${"num1"},
+});
 `,
 }
 ```
@@ -78,6 +86,10 @@ import { previewTemplate } from "storybook-addon-preview";
 ```js
 {
     template: knobs => `
+const inst = new Instance({
+    opt1: ${knobs.opt1},
+    num1: ${knobs.num1},
+});
 `,
 }
 ```
