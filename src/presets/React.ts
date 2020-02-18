@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2020-present NAVER Corp.
+ * egjs projects are licensed under the MIT license
+ */
 export const REACT_PRESET =  {
     dependencies: {
         react: "^16.8.0",

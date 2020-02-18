@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2020-present NAVER Corp.
+ * egjs projects are licensed under the MIT license
+ */
 import addons, { makeDecorator } from '@storybook/addons';
 import * as registerKnobs from "@storybook/addon-knobs/dist/registerKnobs";
 
@@ -44,7 +48,7 @@ export function previewTemplate(strings: TemplateStringsArray, ...values: any[])
                 var v = p[n];
 
                 v = JSON.stringify(v);
-                
+
                 objs.push(space(indent) + n + ": " + v  + (i + 1 === length ? endSeparator : separator));
             });
             objs.push(space(endIndent) + "}");
@@ -78,7 +82,7 @@ export function previewTemplate(strings: TemplateStringsArray, ...values: any[])
     `);
 }
 
-previewTemplate.object = function (props: any[], options: any = {}) {
+previewTemplate.object = (props: any[], options: any = {}) => {
     const {
         indent = 4,
         endIndent = indent - 4,
@@ -106,7 +110,7 @@ export const withPreview = makeDecorator({
             channel.emit("knobs", getKnobs());
         });
         return storyFn(context);
-    }
+    },
 });
 export * from "./code/consts";
 export { previewFunction, codeIndent, convertGlobalCSS } from "./code/utils";

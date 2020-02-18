@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2020-present NAVER Corp.
+ * egjs projects are licensed under the MIT license
+ */
 export const LIT_PRESET =  {
     dependencies: {
         "lit-element": "latest",

@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2020-present NAVER Corp.
+ * egjs projects are licensed under the MIT license
+ */
 import * as React from "react";
 import { addons, types } from "@storybook/addons";
 import { useChannel, useParameter } from "@storybook/api";
@@ -82,7 +86,7 @@ const PreviewPanel = () => {
     const templates = optionsList.filter(o => "template" in o).map(o => getInfo(o, userKnobs));
     const previews = [];
     const templatesObject = {};
-    
+
     templates.forEach(template => {
         const { tab, codesandbox } = template;
         if (!templatesObject[tab]) {
@@ -114,15 +118,14 @@ const PreviewPanel = () => {
     });
 
     const onCopyText = (tab: number, index: number) => {
-        const preview = previews[tab];
+        const copyPreview = previews[tab];
 
-        if (!preview) {
+        if (!copyPreview) {
             return "";
         }
-        const templates = preview.templates.slice(index);
         const texts: string[] = [];
 
-        templates.every((template, i) => {
+        copyPreview.templates.slice(index).every((template, i) => {
             if (i > 0 && !template.continue) {
                 return false;
             }
@@ -176,7 +179,7 @@ const PreviewPanel = () => {
             </TabList>
 
             {previews.map(({ codesandbox, tab, templates: previewTemplates }, i) => {
-                return (<TabPanel key={tab}>                    
+                return (<TabPanel key={tab}>
                     <div className="panel" ref={panelRef}>
                         {codesandbox && <CodeSandBox info={typeof codesandbox === "function" ? codesandbox(previewsObject) : codesandbox} />}
                         {previewTemplates.map(({ language, description, copy }, j) => {

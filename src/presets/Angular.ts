@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2020-present NAVER Corp.
+ * egjs projects are licensed under the MIT license
+ */
 export const ANGULAR_PRESET =  {
     dependencies: {
         "@angular/common": "^8.0.0",
@@ -59,7 +63,7 @@ export const environment = {
         "src/environments/environment.prod.ts": `
 export const environment = {
     production: true
-};  
+};
 `,
         "angular-cli.json": `
 {
@@ -81,6 +85,6 @@ export const environment = {
             }
         }
     ]
-}`
-    }
+}`,
+    },
 }

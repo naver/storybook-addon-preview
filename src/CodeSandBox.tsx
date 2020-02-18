@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2020-present NAVER Corp.
+ * egjs projects are licensed under the MIT license
+ */
 import * as React from "react";
 import { getParameters } from "codesandbox/lib/api/define";
 import { VANILLA_PRESET } from "./presets/Vanilla";

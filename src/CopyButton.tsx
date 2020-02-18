@@ -1,10 +1,14 @@
+/**
+ * Copyright (c) 2020-present NAVER Corp.
+ * egjs projects are licensed under the MIT license
+ */
 import * as React from "react";
 
 function copyText(text, copyInput) {
     if (navigator.clipboard) {
-        navigator.clipboard.writeText(text).then(function () {
+        navigator.clipboard.writeText(text).then(() => {
             alert("You have copied the code.");
-        }).catch(function () {
+        }).catch(() => {
             copyTextarea(text, copyInput);
         });
     } else {

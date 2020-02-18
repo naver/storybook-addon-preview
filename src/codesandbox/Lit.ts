@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2020-present NAVER Corp.
+ * egjs projects are licensed under the MIT license
+ */
 import { joinStrs } from "../utils";
 import { CodeSandboxTemplate } from "../types";
 

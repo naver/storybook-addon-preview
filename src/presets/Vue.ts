@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2020-present NAVER Corp.
+ * egjs projects are licensed under the MIT license
+ */
 export const VUE_PRESET =  {
     dependencies: {
         "vue": "^2.6.0",

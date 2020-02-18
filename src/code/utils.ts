@@ -1,3 +1,8 @@
+/**
+ * Copyright (c) 2020-present NAVER Corp.
+ * egjs projects are licensed under the MIT license
+ */
+
 import { CODE_TYPE } from "./consts";
 
 function replaceOnce(func: string, regx: RegExp, callback: (...args: any[]) => string) {

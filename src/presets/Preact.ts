@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2020-present NAVER Corp.
+ * egjs projects are licensed under the MIT license
+ */
 export const PREACT_PRESET =  {
     dependencies: {
         preact: "latest",

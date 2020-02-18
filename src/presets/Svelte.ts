@@ -1,3 +1,7 @@
+/**
+ * Copyright (c) 2020-present NAVER Corp.
+ * egjs projects are licensed under the MIT license
+ */
 export const SVELTE_PRESET =  {
     dependencies: {
         "svelte": "^3.16.1",
@@ -9,7 +13,7 @@ export const SVELTE_PRESET =  {
         "rollup-plugin-node-resolve": "^4.2.3",
         "rollup-plugin-svelte": "^5.0.3",
         "rollup-plugin-terser": "^4.0.4",
-        "sirv-cli": "^0.3.1"
+        "sirv-cli": "^0.3.1",
     },
     files: {
         "index.js": `
@@ -65,5 +69,5 @@ export default {
     ]
 };
         `,
-    }
+    },
 }
