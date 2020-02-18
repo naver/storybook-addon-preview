@@ -10,19 +10,21 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/daybrush/storybook-addon-preview.git"
+    "url": "git+https://github.com/naver/storybook-addon-preview.git"
   },
-  "author": "",
+  "author": {
+		"name": "NAVER Corp."
+	},
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/daybrush/storybook-addon-preview/issues"
+    "url": "https://github.com/naver/storybook-addon-preview/issues"
   },
   "keywords": [
     "storybook",
     "addon",
     "preview"
   ],
-  "homepage": "https://github.com/daybrush/storybook-addon-preview#readme",
+  "homepage": "https://github.com/naver/storybook-addon-preview#readme",
   "dependencies": {
     "@storybook/addon-knobs": "^5.2.6",
     "@types/prismjs": "^1.16.0",

@@ -196,8 +196,8 @@ const PreviewPanel = () => {
 };
 
 
-addons.register("daybrush/storyboook-addon-preview", api => {
-    addons.add("daybrush/storyboook-addon-preview/panel", {
+addons.register("naver/storyboook-addon-preview", api => {
+    addons.add("naver/storyboook-addon-preview/panel", {
         title: "Code Preview",
         type: types.PANEL,
         paramKey: "preview",
