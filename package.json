@@ -1,44 +1,44 @@
 {
-  "name": "storybook-addon-preview",
-  "version": "0.9.0",
-  "description": "Storybook Addon Preview can show user selected knobs in various framework code in Storybook",
-  "main": "./dist/index.js",
-  "declaration": "./dist/index.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc -p tsconfig.json && cp src/preview.css dist/preview.css"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/naver/storybook-addon-preview.git"
-  },
-  "author": {
-		"name": "NAVER Corp."
-	},
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/naver/storybook-addon-preview/issues"
-  },
-  "keywords": [
-    "storybook",
-    "addon",
-    "preview"
-  ],
-  "homepage": "https://github.com/naver/storybook-addon-preview#readme",
-  "dependencies": {
-    "@storybook/addon-knobs": "^5.2.6",
-    "@types/prismjs": "^1.16.0",
-    "codesandbox": "^2.1.10",
-    "prismjs": "^1.17.1",
-    "react-tabs": "^3.0.0"
-  },
-  "devDependencies": {
-    "@storybook/addons": "^5.2.6",
-    "@storybook/components": "^5.2.6",
-    "@types/node": "^12.12.7",
-    "@types/react": "^16.9.11",
-    "react": "^16.11.0",
-    "tslint": "^6.0.0",
-    "typescript": "^3.7.2"
-  }
+    "name": "storybook-addon-preview",
+    "version": "0.9.0",
+    "description": "Storybook Addon Preview can show user selected knobs in various framework code in Storybook",
+    "main": "./dist/index.js",
+    "declaration": "./dist/index.d.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "tsc -p tsconfig.json && cp src/preview.css dist/preview.css"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/naver/storybook-addon-preview.git"
+    },
+    "author": {
+        "name": "NAVER Corp."
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/naver/storybook-addon-preview/issues"
+    },
+    "keywords": [
+        "storybook",
+        "addon",
+        "preview"
+    ],
+    "homepage": "https://github.com/naver/storybook-addon-preview#readme",
+    "dependencies": {
+        "@storybook/addon-knobs": "^5.2.6",
+        "@types/prismjs": "^1.16.0",
+        "codesandbox": "^2.1.10",
+        "prismjs": "^1.17.1",
+        "react-tabs": "^3.0.0"
+    },
+    "devDependencies": {
+        "@storybook/addons": "^5.2.6",
+        "@storybook/components": "^5.2.6",
+        "@types/node": "^12.12.7",
+        "@types/react": "^16.9.11",
+        "react": "^16.11.0",
+        "tslint": "^6.0.0",
+        "typescript": "^3.7.2"
+    }
 }
