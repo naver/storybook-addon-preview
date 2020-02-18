@@ -57,6 +57,18 @@ const inst = new Instance({
 
 [InfiniteGrid's Storybook Example](https://github.com/naver/egjs-infinitegrid/blob/master/storybook/stories/templates/story.template.tsx)
 
+### Properties
+
+|Name|Type|Description|
+|---|---|---|
+|tab|string|preview can show multiple tab and can determine the name of the tab. If you have the same name, you can show multiple codes on one tab.|
+|template|string, function|Code to display on the screen. If you use knobs, use previewTemplate. If the knobs are not used, they can be represented as strings.|
+|knobs|object|Custom knobs to use in preview templates, except those used in stories,|
+|continue|boolean|If the tab name is the same and the code is different, enable true if you want to continue the line number.|
+|lanauge|string|Language to highlight the code in the template (js, ts, jsx, tsx, html, css)|
+|codesandbox|function|Link the code you used to the code sandbox.|
+|copy|boolean|Whether to show the copy code button|
+
 ### Template
 * If the template is code that does not use knobs, you can just write it as `string` type.
 ```js
@@ -94,18 +106,6 @@ const inst = new Instance({
 }
 ```
 
-### Properties
-
-|Name|Type|Description|
-|---|---|---|
-|tab|string|preview can show multiple tab and can determine the name of the tab. If you have the same name, you can show multiple codes on one tab.|
-|template|string, function|Code to display on the screen. If you use knobs, use previewTemplate. If the knobs are not used, they can be represented as strings.|
-|knobs|object|Custom knobs to use in preview templates, except those used in stories,|
-|continue|boolean|If the tab name is the same and the code is different, enable true if you want to continue the line number.|
-|lanauge|string|Language to highlight the code in the template (js, ts, jsx, tsx, html, css)|
-|codesandbox|function|Link the code you used to the code sandbox.|
-|copy|boolean|Whether to show the copy code button|
-
 
 ### CodeSandBox
 Link the code you used to the code sandbox.
@@ -118,7 +118,7 @@ const CodeSandboxTemplate = (previews) => ({
     framework: "FRAMEWORK_TYPE",
       files: {
         // Tab name and code order (Mostly 0)
-        "src/App.tsx": previews["TAB NAME"][0], 
+        "src/App.tsx": previews["TAB NAME"][0],
         "src/styles.css": previews["TAB NAME2"][0],
     },
     // External modules except framework modules used in code
