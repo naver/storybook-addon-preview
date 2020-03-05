@@ -63,49 +63,12 @@ function hasKnobs(knobs) {
 }
 
 const PreviewPanel = () => {
-    const [knobs, setKnobs] = React.useState({});
-    const [defaultTabIndex, setTabIndex] = React.useState(0);
-    const [
-        preview = knobs,
-        setPreview,
-    ] = React.useState();
-
-    const options = useParameter("preview", []);
+    const [userKnobs, setKnobs] = React.useState({});
+    const [preview, setPreview] = React.useState();
+    const [defaultTabIndex, setTabIndex] = React.useState(-1);
+    const options = [].concat(useParameter("preview", []));
     const panelRef = React.useRef<HTMLDivElement>();
-    const optionsList = [].concat(options);
-    const userKnobs = {...preview};
-
-    optionsList.forEach(o => {
-        const optionKnobs = o.knobs;
-        if (optionKnobs) {
-            for (const name in optionKnobs) {
-                userKnobs[name] = optionKnobs[name];
-            }
-        }
-    });
-    const templates = optionsList.filter(o => "template" in o).map(o => getInfo(o, userKnobs));
-    const previews = [];
-    const templatesObject = {};
-
-    templates.forEach(template => {
-        const { tab, codesandbox } = template;
-        if (!templatesObject[tab]) {
-            templatesObject[tab] = [];
-            previews.push({
-                codesandbox,
-                tab,
-                templates: templatesObject[tab],
-            });
-        }
-        templatesObject[tab].push(template);
-    });
-
-    const previewsObject = {};
-    for (const name in templatesObject) {
-        previewsObject[name] = templatesObject[name].map(template => template.text);
-    }
-    const tabIndex = Math.min(defaultTabIndex, previews.length);
-
+    const knobs = {...userKnobs, ...preview};
 
     useChannel({
         "preview": e => {
@@ -116,7 +79,40 @@ const PreviewPanel = () => {
             setPreview(undefined);
         },
     });
+    options.forEach(o => {
+        const optionKnobs = o.knobs;
+        if (optionKnobs) {
+            for (const name in optionKnobs) {
+                knobs[name] = optionKnobs[name];
+            }
+        }
+    });
+    const templates = options
+        .filter(option => "template" in option)
+        .map(option => getInfo(option, userKnobs));
 
+    const previews = [];
+    const templateMap = {};
+
+    templates.forEach(template => {
+        const { tab, codesandbox } = template;
+        if (!templateMap[tab]) {
+            templateMap[tab] = [];
+            previews.push({
+                codesandbox,
+                tab,
+                templates: templateMap[tab],
+            });
+        }
+        templateMap[tab].push(template);
+    });
+
+    const previewMap = {};
+
+    for (const name in templateMap) {
+        previewMap[name] = templateMap[name].map(template => template.text);
+    }
+    const tabIndex = Math.max(0, Math.min(defaultTabIndex, previews.length));
     const onCopyText = (tab: number, index: number) => {
         const copyPreview = previews[tab];
 
@@ -171,7 +167,7 @@ const PreviewPanel = () => {
         });
     });
     return (
-        <Tabs className={["react-tabs", "preview-tabs"]}onSelect={index => {
+        <Tabs className={["react-tabs", "preview-tabs"]} onSelect={index => {
             setTabIndex(index);
         }}>
             <TabList>
@@ -181,7 +177,7 @@ const PreviewPanel = () => {
             {previews.map(({ codesandbox, tab, templates: previewTemplates }, i) => {
                 return (<TabPanel key={tab}>
                     <div className="panel" ref={panelRef}>
-                        {codesandbox && <CodeSandBox info={typeof codesandbox === "function" ? codesandbox(previewsObject) : codesandbox} />}
+                        {codesandbox && <CodeSandBox info={typeof codesandbox === "function" ? codesandbox(previewMap) : codesandbox} />}
                         {previewTemplates.map(({ language, description, copy }, j) => {
                             return <div className="code-preview" key={j}>
                                 {copy && <CopyButton tab={i} index={j} onCopyText={onCopyText} />}
