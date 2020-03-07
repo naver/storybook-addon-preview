@@ -64,7 +64,7 @@ const inst = new Instance({
 |Name|Type|Description|
 |---|---|---|
 |tab|string|preview can show multiple tab and can determine the name of the tab. If you have the same name, you can show multiple codes on one tab.|
-|template|string, function|Code to display on the screen. If you use knobs, use previewTemplate. If the knobs are not used, they can be represented as strings.|
+|template|string, function, template|Code to display on the screen. If you use knobs, use previewTemplate. If the knobs are not used, they can be represented as strings.|
 |knobs|object|Custom knobs to use in preview templates, except those used in stories,|
 |continue|boolean|If the tab name is the same and the code is different, enable true if you want to continue the line number.|
 |lanauge|string|Language to highlight the code in the template (js, ts, jsx, tsx, html, css)|
