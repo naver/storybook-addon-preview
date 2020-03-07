@@ -31,8 +31,12 @@ function getInfo(options, preview) {
 
     if (typeof template === "string") {
         text = template;
-    } else if (typeof template === "function" && hasKnobs(preview)) {
-        text = template(preview);
+    } else if (typeof template === "function") {
+        try {
+            text = template(preview || {});
+        } catch (e) {
+            text = "";
+        }
     }
 
     return {
