@@ -60,3 +60,4 @@ export * from "./codesandbox/Svelte";
 export * from "./codesandbox/Vanilla";
 export * from "./codesandbox/VanillaJS";
 export * from "./codesandbox/Vue";
+export * from "./props/index";
