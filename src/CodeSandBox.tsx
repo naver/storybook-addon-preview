@@ -4,13 +4,15 @@
  */
 import * as React from "react";
 import { getParameters } from "codesandbox/lib/api/define";
-import { VANILLA_PRESET } from "./presets/Vanilla";
-import { REACT_PRESET } from "./presets/React";
-import { PREACT_PRESET } from "./presets/Preact";
-import { ANGULAR_PRESET } from "./presets/Angular";
-import { SVELTE_PRESET } from "./presets/Svelte";
-import { VUE_PRESET } from "./presets/Vue";
-import { LIT_PRESET } from "./presets/Lit";
+import {
+    REACT_PRESET,
+    PREACT_PRESET,
+    ANGULAR_PRESET,
+    SVELTE_PRESET,
+    VUE_PRESET,
+    LIT_PRESET,
+    VANILLA_PRESET,
+} from "./presets/index";
 
 
 const presets = {
