@@ -54,3 +54,4 @@ export const withPreview = makeDecorator({
 export * from "./code/consts";
 export { previewFunction, codeIndent, convertGlobalCSS } from "./code/utils";
 export * from "./codesandbox/index";
+export * from "./props/index";

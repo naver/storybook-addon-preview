@@ -21,11 +21,12 @@ export function JSX_PROPS_TEMPLATE(names: string[], indent: number = 4) {
         },
     );
 }
-export function ANGULAR_PROPS_TEMPLATE(names: string[], indent: number = 4) {
+export function ANGULAR_PROPS_TEMPLATE(names: string[], indent: number = 4, useSingleQuote = false) {
+    const quote = useSingleQuote ? "'" : '"';
     return optionsTemplate(names,
         {
             indent,
-            template: name => [`[${name}]="`, name, "\"", ""],
+            template: name => [`[${name}]=${quote}`, name, quote, ""],
             separator: "\n",
             joinSeparator: "",
             endSeparator: "",
