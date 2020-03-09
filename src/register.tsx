@@ -33,12 +33,8 @@ function processArrayTemplate([strings, values]: any[], knobs: { [key: string]: 
             if (Array.isArray(name)) {
                 value = processArrayTemplate(name, knobs);
             } else if (name in knobs) {
-                value = knobs[name];
+                value = JSON.stringify(knobs[name]);
             }
-        }
-
-        if (typeof value === "object") {
-            value = JSON.stringify(value);
         }
         return prev + next + value;
     }, "");
@@ -67,7 +63,7 @@ function getInfo(options, preview) {
     return {
         ...options,
         description,
-        text: text.trim(),
+        text: (text || "").trim(),
         tab,
         language,
     };
@@ -100,7 +96,7 @@ const PreviewPanel = () => {
     });
     const templates = options
         .filter(option => "template" in option)
-        .map(option => getInfo(option, userKnobs || {}));
+        .map(option => getInfo(option, knobs || {}));
 
     const previews = [];
     const templateMap = {};
