@@ -30,6 +30,11 @@ function processArrayTemplate([strings, values]: any[], knobs: { [key: string]: 
         let value: any = name;
 
         if (name) {
+            if (typeof name === "function") {
+                try {
+                    value = name(knobs);
+                } catch (e) {}
+            }
             if (Array.isArray(name)) {
                 value = processArrayTemplate(name, knobs);
             } else if (name in knobs) {

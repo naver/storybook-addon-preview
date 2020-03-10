@@ -4,8 +4,7 @@
  */
 import addons, { makeDecorator } from '@storybook/addons';
 import * as registerKnobs from "@storybook/addon-knobs/dist/registerKnobs";
-import { ObjectType, OptionsType } from "./types";
-import { optionsTemplate } from './utils';
+import { OBJECT_TEMPLATE } from './props';
 
 function getKnobs() {
     const knobs = registerKnobs.manager.knobStore.getAll();
@@ -23,21 +22,20 @@ export const preview = (parameter: any) => {
     channel.emit("preview", parameter);
 }
 
+export function raw(name: string) {
+    return new Function(`
+        var knobs = arguments[0];
+
+        return knobs[${JSON.stringify(name)}];
+    `);
+}
+
 export function previewTemplate(strings: TemplateStringsArray, ...values: any[]) {
     return [strings, values];
 }
 
-previewTemplate.object = (props: any[], options: ObjectType = {}) => {
-    return optionsTemplate(
-        props,
-        {
-            prefix: "{",
-            suffix: "}",
-            ...options,
-        },
-    );
-}
-previewTemplate.options = optionsTemplate;
+previewTemplate.object = OBJECT_TEMPLATE;
+previewTemplate.raw = raw;
 
 export const withPreview = makeDecorator({
     name: 'withPreview',
@@ -51,7 +49,9 @@ export const withPreview = makeDecorator({
         return storyFn(context);
     },
 });
+
 export * from "./code/consts";
 export { previewFunction, codeIndent, convertGlobalCSS } from "./code/utils";
 export * from "./codesandbox/index";
 export * from "./props/index";
+export * from "./types";
