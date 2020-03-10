@@ -16,3 +16,9 @@ export interface OptionsType extends ObjectType {
     prefix?: string,
     suffix?: string,
 }
+
+export interface PropsOptions {
+    indent?: number;
+    wrap?: string;
+    prefix?: string;
+}
