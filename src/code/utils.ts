@@ -25,6 +25,9 @@ export function toArrow(func: string) {
 export function toClassArrow(func: string) {
     return replaceOnce(func, /function ([^(]+)([^)]+\))/g, (_, a1, a2) => `${a2} =>`);
 }
+export function toReactArrow(func: string) {
+    return replaceOnce(func, /function ([^(]+)([^)]+\))/g, (_, a1, a2) => `${a1}={${a2} =>`) + "}";
+}
 export function toArrowMethod(func: string) {
     return replaceOnce(func, /function ([^(]+)([^)]+\))/g, (_, a1, a2) => `${a1} = ${a2} =>`);
 }
@@ -74,12 +77,16 @@ export function convertFunction(func: string, type: CODE_TYPE, comment: string) 
             return includeComment(removeBracket(toCustomEvent(toClassArrow(func))), "method", comment);
         case CODE_TYPE.CUSTOM_EVENT_ARROW_METHOD:
             return includeComment(removeBracket(toCustomEvent(toArrowMethod(func))), "method", comment);
+        case CODE_TYPE.REACT_ARROW:
+            return includeComment(removeBracket(toReactArrow(func)), "method", comment);
+        case CODE_TYPE.SVELTE_ARROW:
+            return includeComment(removeBracket(toCustomEvent(toReactArrow(func))), "method", comment);
         default:
             return func;
     }
 }
 export function previewFunction(func: string) {
-    return (type: CODE_TYPE, comment = "") => {
+    return (type: CODE_TYPE, comment = "", ) => {
         let rv = convertFunction(func, type, comment);
         rv = includeComment(rv, "", comment);
         rv = includeComment(rv, comment);
