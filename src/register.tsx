@@ -76,7 +76,7 @@ function getInfo(options, preview) {
 
 const PreviewPanel = () => {
     const [userKnobs, setKnobs] = React.useState({});
-    const [preview, setPreview] = React.useState();
+    const [preview, setPreview] = React.useState<object>();
     const [defaultTabIndex, setTabIndex] = React.useState(-1);
     const options = [].concat(useParameter("preview", []));
     const panelRef = React.useRef<HTMLDivElement>();
@@ -124,7 +124,7 @@ const PreviewPanel = () => {
     for (const name in templateMap) {
         previewMap[name] = templateMap[name].map(template => template.text);
     }
-    const tabIndex = Math.max(0, Math.min(defaultTabIndex, previews.length));
+    const tabIndex = Math.max(0, Math.min(defaultTabIndex, previews.length - 1));
     const onCopyText = (tab: number, index: number) => {
         const copyPreview = previews[tab];
 
