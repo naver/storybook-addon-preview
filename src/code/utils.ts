@@ -28,6 +28,12 @@ export function toClassArrow(func: string) {
 export function toReactArrow(func: string) {
     return replaceOnce(func, /function ([^(]+)([^)]+\))/g, (_, a1, a2) => `${a1}={${a2} =>`) + "}";
 }
+export function toSvelteArrow(func: string) {
+    return replaceOnce(
+        func, /function ([^(]+)([^)]+\))/g,
+        (_, a1, a2) => `${a1.replace(/on([A-Z])/g, (_2, c) => `on:${c.toLowerCase()}`)}={${a2} =>`,
+    ) + "}";
+}
 export function toArrowMethod(func: string) {
     return replaceOnce(func, /function ([^(]+)([^)]+\))/g, (_, a1, a2) => `${a1} = ${a2} =>`);
 }
@@ -80,7 +86,7 @@ export function convertFunction(func: string, type: CODE_TYPE, comment: string) 
         case CODE_TYPE.REACT_ARROW:
             return includeComment(removeBracket(toReactArrow(func)), "method", comment);
         case CODE_TYPE.SVELTE_ARROW:
-            return includeComment(removeBracket(toCustomEvent(toReactArrow(func))), "method", comment);
+            return includeComment(removeBracket(toCustomEvent(toSvelteArrow(func))), "method", comment);
         default:
             return func;
     }
