@@ -15,10 +15,13 @@ import "prismjs/components/prism-tsx";
 import "prismjs/themes/prism.css";
 import "prismjs/plugins/line-numbers/prism-line-numbers";
 import "prismjs/plugins/line-numbers/prism-line-numbers.css";
+import "prismjs/plugins/line-highlight/prism-line-highlight";
+import "prismjs/plugins/line-highlight/prism-line-highlight.css";
 import "./preview.css";
 
 import CodeSandBox from "./CodeSandBox";
 import CopyButton from "./CopyButton";
+import { getHighlightInfo } from "./utils";
 
 function processArrayTemplate([strings, values]: any[], knobs: { [key: string]: any }) {
     return strings.reduce((prev, next, i) => {
@@ -171,8 +174,16 @@ const PreviewPanel = () => {
             if (!template.continue) {
                 startNumber = 1;
             }
-            codeElement.parentElement.setAttribute("data-start", startNumber);
-            codeElement.innerHTML = code;
+            const {
+                lines: highlightLines,
+                code: nextCode,
+            } = getHighlightInfo(code);
+
+
+            const preElement = codeElement.parentElement;
+            preElement.setAttribute("data-start", startNumber);
+            preElement.setAttribute("data-line", highlightLines.join(","));
+            codeElement.innerHTML = nextCode;
 
             Prism.highlightElement(codeElement);
             startNumber += code.split("\n").length;

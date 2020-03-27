@@ -41,6 +41,9 @@
 .panel .code-preview {
     position: relative;
 }
+.panel .code-preview .line-highlight {
+    margin-top: 0;
+}
 .panel form+.code-preview>.preview-copy {
     right: 130px;
 }
