@@ -109,6 +109,114 @@ const inst = new Instance({
 ```
 
 
+
+#### Highlight
+* If you want to highlight your code, add a `[highlight]` comment.
+
+```js
+{
+    template: previewTemplate`
+const inst = new Instance({
+    /* [highlight] highlight opt1 */
+    opt1: ${"opt1"},
+    num1: ${"num1"},
+});
+`,
+}
+```
+* If you want to highlight your code area, add the `[highlight-start]` and `[highlight-end]` comments.
+```js
+{
+    template: previewTemplate`
+const inst = new Instance({
+    /* [highlight-start] highlight options */
+    opt1: ${"opt1"},
+    num1: ${"num1"},
+    /* [highlight-end] */
+});
+`,
+}
+```
+
+#### Props
+Easily use options or props or use props template when you have many options
+```ts
+export interface PropsOptions {
+    indent?: number;
+    wrap?: string;
+    prefix?: string;
+}
+```
+* DEFAULT_PROPS_TEMPLATE(names: string[], options: PropsOptions)
+```js
+import { previewTemplate, DEFAULT_PROPS_TEMPLATE } from "storybook-addon-preview";
+
+{
+    template: previewTemplate`
+/* [highlight] You can see opt1, num1 options. */
+const inst = new Instance({
+${DEFAULT_PROPS_TEMPLATE(["opt1", "num1"], { indent: 4 })}
+});
+`,
+}
+```
+* JSX_PROPS_TEMPLATE(names: string[], options: PropsOptions)
+```js
+import { previewTemplate, JSX_PROPS_TEMPLATE } from "storybook-addon-preview";
+
+{
+    template: previewTemplate`
+/* [highlight] You can see opt1, num1 options. */
+<Instance
+${JSX_PROPS_TEMPLATE(["opt1", "num1"], { indent: 4 })}
+    />
+`,
+    language: "jsx",
+}
+```
+* ANGULAR_PROPS_TEMPLATE(names: string[], options: PropsOptions)
+```js
+import { previewTemplate, ANGULAR_PROPS_TEMPLATE } from "storybook-addon-preview";
+
+{
+    template: previewTemplate`
+/* [highlight] You can see opt1, num1 options. */
+<ngx-instance
+${ANGULAR_PROPS_TEMPLATE(["opt1", "num1"], { indent: 4 })}
+    ></ngx-instance>
+`,
+    language: "html",
+}
+```
+* VUE_PROPS_TEMPLATE(names: string[], options: PropsOptions)
+```js
+import { previewTemplate, VUE_PROPS_TEMPLATE } from "storybook-addon-preview";
+
+{
+    template: previewTemplate`
+/* [highlight] You can see opt1, num1 options. */
+<vue-instance
+${VUE_PROPS_TEMPLATE(["opt1", "num1"], { indent: 4 })}
+    ></vue-instance>
+`,
+    language: "html",
+}
+```
+* LIT_PROPS_TEMPLATE(names: string[], options: PropsOptions)
+```js
+import { previewTemplate, LIT_PROPS_TEMPLATE } from "storybook-addon-preview";
+
+{
+    template: previewTemplate`
+/* [highlight] You can see opt1, num1 options. */
+html${"`"}<lit-instance
+${LIT_PROPS_TEMPLATE(["opt1", "num1"], { indent: 4 })}
+    ></lit-instance>${"`"};
+`,
+    language: "js",
+}
+```
+
 ### CodeSandBox
 Link the code you used to the code sandbox.
 There is a dependency and initial settings file for linking code sandboxes.
