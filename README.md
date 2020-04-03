@@ -64,7 +64,7 @@ const inst = new Instance({
 |Name|Type|Description|
 |---|---|---|
 |tab|string|preview can show multiple tab and can determine the name of the tab. If you have the same name, you can show multiple codes on one tab.|
-|template|string, function|Code to display on the screen. If you use knobs, use previewTemplate. If the knobs are not used, they can be represented as strings.|
+|template|string, function, template|Code to display on the screen. If you use knobs, use previewTemplate. If the knobs are not used, they can be represented as strings.|
 |knobs|object|Custom knobs to use in preview templates, except those used in stories,|
 |continue|boolean|If the tab name is the same and the code is different, enable true if you want to continue the line number.|
 |lanauge|string|Language to highlight the code in the template (js, ts, jsx, tsx, html, css)|
@@ -108,6 +108,134 @@ const inst = new Instance({
 }
 ```
 
+
+
+#### Highlight
+* If you want to highlight your code, add a `[highlight]` comment.
+
+```js
+[
+    {
+        template: previewTemplate`
+    const inst = new Instance({
+        /* [highlight] highlight opt1 */
+        opt1: ${"opt1"},
+        num1: ${"num1"},
+    });
+        `,
+        language: "js",
+    },
+    {
+        template: previewTemplate`
+<!-- [highlight] highlight html -->
+<div style="width: ${"width"}px;"></div>
+        `,
+        language: "html",
+    },
+]
+```
+* If you want to highlight your code area, add the `[highlight-start]` and `[highlight-end]` comments.
+```js
+[
+    {
+        template: previewTemplate`
+    const inst = new Instance({
+        /* [highlight-start] highlight options */
+        opt1: ${"opt1"},
+        num1: ${"num1"},
+        /* [highlight-end] */
+    });
+    `,
+    },
+    {
+        template: previewTemplate`
+<!-- [highlight-start] highlight html -->
+<div style="width: ${"width"}px;"></div>
+<!-- [highlight-end] -->
+        `,
+        language: "html",
+    },
+]
+```
+
+#### Props
+Easily use options or props or use props template when you have many options
+```ts
+export interface PropsOptions {
+    indent?: number;
+    wrap?: string;
+    prefix?: string;
+}
+```
+* DEFAULT_PROPS_TEMPLATE(names: string[], options: PropsOptions)
+```js
+import { previewTemplate, DEFAULT_PROPS_TEMPLATE } from "storybook-addon-preview";
+
+{
+    template: previewTemplate`
+/* [highlight] You can see opt1, num1 options. */
+const inst = new Instance({
+${DEFAULT_PROPS_TEMPLATE(["opt1", "num1"], { indent: 4 })}
+});
+`,
+}
+```
+* JSX_PROPS_TEMPLATE(names: string[], options: PropsOptions)
+```js
+import { previewTemplate, JSX_PROPS_TEMPLATE } from "storybook-addon-preview";
+
+{
+    template: previewTemplate`
+/* [highlight] You can see opt1, num1 options. */
+<Instance
+${JSX_PROPS_TEMPLATE(["opt1", "num1"], { indent: 4 })}
+    />
+`,
+    language: "jsx",
+}
+```
+* ANGULAR_PROPS_TEMPLATE(names: string[], options: PropsOptions)
+```js
+import { previewTemplate, ANGULAR_PROPS_TEMPLATE } from "storybook-addon-preview";
+
+{
+    template: previewTemplate`
+/* [highlight] You can see opt1, num1 options. */
+<ngx-instance
+${ANGULAR_PROPS_TEMPLATE(["opt1", "num1"], { indent: 4 })}
+    ></ngx-instance>
+`,
+    language: "html",
+}
+```
+* VUE_PROPS_TEMPLATE(names: string[], options: PropsOptions)
+```js
+import { previewTemplate, VUE_PROPS_TEMPLATE } from "storybook-addon-preview";
+
+{
+    template: previewTemplate`
+/* [highlight] You can see opt1, num1 options. */
+<vue-instance
+${VUE_PROPS_TEMPLATE(["opt1", "num1"], { indent: 4 })}
+    ></vue-instance>
+`,
+    language: "html",
+}
+```
+* LIT_PROPS_TEMPLATE(names: string[], options: PropsOptions)
+```js
+import { previewTemplate, LIT_PROPS_TEMPLATE } from "storybook-addon-preview";
+
+{
+    template: previewTemplate`
+/* [highlight] You can see opt1, num1 options. */
+html${"`"}<lit-instance
+${LIT_PROPS_TEMPLATE(["opt1", "num1"], { indent: 4 })}
+    ></lit-instance>${"`"};
+`,
+    language: "js",
+}
+```
 
 ### CodeSandBox
 Link the code you used to the code sandbox.

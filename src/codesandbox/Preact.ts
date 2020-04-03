@@ -5,7 +5,7 @@
 import { joinStrs } from "../utils";
 import { CodeSandboxTemplate } from "../types";
 
-export const DEFAULT_REACT_CODESANDBOX = (dependencies: string[]) => new Function(`
+export const DEFAULT_PREACT_CODESANDBOX = (dependencies: string[]) => new Function(`
 var previews = arguments[0];
 return {
     framework: "preact",

@@ -15,11 +15,38 @@ import "prismjs/components/prism-tsx";
 import "prismjs/themes/prism.css";
 import "prismjs/plugins/line-numbers/prism-line-numbers";
 import "prismjs/plugins/line-numbers/prism-line-numbers.css";
+import "prismjs/plugins/line-highlight/prism-line-highlight";
+import "prismjs/plugins/line-highlight/prism-line-highlight.css";
 import "./preview.css";
 
 import CodeSandBox from "./CodeSandBox";
 import CopyButton from "./CopyButton";
+import { getHighlightInfo } from "./utils";
 
+function processArrayTemplate([strings, values]: any[], knobs: { [key: string]: any }) {
+    return strings.reduce((prev, next, i) => {
+        let name = values[i];
+
+        if (typeof name === "undefined") {
+            name = "";
+        }
+        let value: any = name;
+
+        if (name) {
+            if (typeof name === "function") {
+                try {
+                    value = name(knobs);
+                } catch (e) {}
+            }
+            if (Array.isArray(name)) {
+                value = processArrayTemplate(name, knobs);
+            } else if (name in knobs) {
+                value = JSON.stringify(knobs[name]);
+            }
+        }
+        return prev + next + value;
+    }, "");
+}
 function getInfo(options, preview) {
     const {
         template,
@@ -33,42 +60,26 @@ function getInfo(options, preview) {
         text = template;
     } else if (typeof template === "function") {
         try {
-            text = template(preview || {});
+            text = template(preview);
         } catch (e) {
             text = "";
         }
+    } else if (Array.isArray(template)) {
+        text = processArrayTemplate(template, preview);
     }
 
     return {
         ...options,
         description,
-        text: text.trim(),
+        text: (text || "").trim(),
         tab,
         language,
     };
 }
 
-function hasKnobs(knobs) {
-    const type = typeof knobs;
-
-    if (type === "undefined") {
-        return false;
-    }
-    if (type !== "object") {
-        return true;
-    }
-    if (Array.isArray(knobs)) {
-        return true;
-    }
-    for (const name in knobs) {
-        return true;
-    }
-    return false;
-}
-
 const PreviewPanel = () => {
     const [userKnobs, setKnobs] = React.useState({});
-    const [preview, setPreview] = React.useState();
+    const [preview, setPreview] = React.useState<object>();
     const [defaultTabIndex, setTabIndex] = React.useState(-1);
     const options = [].concat(useParameter("preview", []));
     const panelRef = React.useRef<HTMLDivElement>();
@@ -93,7 +104,7 @@ const PreviewPanel = () => {
     });
     const templates = options
         .filter(option => "template" in option)
-        .map(option => getInfo(option, userKnobs));
+        .map(option => getInfo(option, knobs || {}));
 
     const previews = [];
     const templateMap = {};
@@ -116,7 +127,7 @@ const PreviewPanel = () => {
     for (const name in templateMap) {
         previewMap[name] = templateMap[name].map(template => template.text);
     }
-    const tabIndex = Math.max(0, Math.min(defaultTabIndex, previews.length));
+    const tabIndex = Math.max(0, Math.min(defaultTabIndex, previews.length - 1));
     const onCopyText = (tab: number, index: number) => {
         const copyPreview = previews[tab];
 
@@ -163,8 +174,16 @@ const PreviewPanel = () => {
             if (!template.continue) {
                 startNumber = 1;
             }
-            codeElement.parentElement.setAttribute("data-start", startNumber);
-            codeElement.innerHTML = code;
+            const {
+                lines: highlightLines,
+                code: nextCode,
+            } = getHighlightInfo(code);
+
+
+            const preElement = codeElement.parentElement;
+            preElement.setAttribute("data-start", startNumber);
+            preElement.setAttribute("data-line", highlightLines.join(","));
+            codeElement.innerHTML = nextCode;
 
             Prism.highlightElement(codeElement);
             startNumber += code.split("\n").length;
