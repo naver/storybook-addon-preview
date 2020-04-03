@@ -92,7 +92,7 @@ export function convertFunction(func: string, type: CODE_TYPE, comment: string) 
     }
 }
 export function previewFunction(func: string) {
-    return (type: CODE_TYPE, comment = "", ) => {
+    return (type: CODE_TYPE, comment = "") => {
         let rv = convertFunction(func, type, comment);
         rv = includeComment(rv, "", comment);
         rv = includeComment(rv, comment);

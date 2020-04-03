@@ -114,28 +114,48 @@ const inst = new Instance({
 * If you want to highlight your code, add a `[highlight]` comment.
 
 ```js
-{
-    template: previewTemplate`
-const inst = new Instance({
-    /* [highlight] highlight opt1 */
-    opt1: ${"opt1"},
-    num1: ${"num1"},
-});
-`,
-}
+[
+    {
+        template: previewTemplate`
+    const inst = new Instance({
+        /* [highlight] highlight opt1 */
+        opt1: ${"opt1"},
+        num1: ${"num1"},
+    });
+        `,
+        language: "js",
+    },
+    {
+        template: previewTemplate`
+<!-- [highlight] highlight html -->
+<div style="width: ${"width"}px;"></div>
+        `,
+        language: "html",
+    },
+]
 ```
 * If you want to highlight your code area, add the `[highlight-start]` and `[highlight-end]` comments.
 ```js
-{
-    template: previewTemplate`
-const inst = new Instance({
-    /* [highlight-start] highlight options */
-    opt1: ${"opt1"},
-    num1: ${"num1"},
-    /* [highlight-end] */
-});
-`,
-}
+[
+    {
+        template: previewTemplate`
+    const inst = new Instance({
+        /* [highlight-start] highlight options */
+        opt1: ${"opt1"},
+        num1: ${"num1"},
+        /* [highlight-end] */
+    });
+    `,
+    },
+    {
+        template: previewTemplate`
+<!-- [highlight-start] highlight html -->
+<div style="width: ${"width"}px;"></div>
+<!-- [highlight-end] -->
+        `,
+        language: "html",
+    },
+]
 ```
 
 #### Props
