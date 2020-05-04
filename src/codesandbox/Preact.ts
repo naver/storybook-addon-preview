@@ -10,7 +10,7 @@ var previews = arguments[0];
 return {
     framework: "preact",
     files: {
-        "src/App.tsx": previews["Preact"][0],
+        "src/App.jsx": previews["Preact"][0],
         "src/styles.css": previews["CSS"][0],
     },
     userDependencies: ${joinStrs(dependencies)},
