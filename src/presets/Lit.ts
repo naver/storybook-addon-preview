@@ -8,6 +8,7 @@ export const LIT_PRESET =  {
         "lit-html": "latest",
         "@webcomponents/webcomponentsjs": "latest",
     },
+    template: "parcel",
     files: {
         "index.html": `
 <html>
