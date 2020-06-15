@@ -270,13 +270,13 @@ type DEFAULT_FRAMEWORK_CODESANDBOX = (dependencies: string[]) => CodeSandboxTemp
 
 |Name|Required Tab Names|Code|
 |----|---|---|
-|DEFAULT_VANILLAJS_CODESANDBOX(JS)|HTML, CSS, VANILLA|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/VanillaJS.ts)|
-|DEFAULT_VANILLA_CODESANDBOX(TS)|HTML, CSS, VANILLA|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Vanilla.ts)|
-|DEFAULT_REACT_CODESANDBOX(TS)|React, CSS|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/React.ts)
-|DEFAULT_ANGULAR_CODESANDBOX|CSS, Angular(html, component, module)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Angular.ts)|
+|DEFAULT_VANILLAJS_CODESANDBOX(JS)|HTML, VANILLA, CSS(?)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/VanillaJS.ts)|
+|DEFAULT_VANILLA_CODESANDBOX(TS)|HTML, VANILLA, CSS(?)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Vanilla.ts)|
+|DEFAULT_REACT_CODESANDBOX(TS)|React, CSS(?)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/React.ts)
+|DEFAULT_ANGULAR_CODESANDBOX|Angular(html, component, module), CSS(?)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Angular.ts)|
 |DEFAULT_VUE_CODESANDBOX|Vue|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Vue.ts)|
 |DEFAULT_SVELTE_CODESANDBOX|Svelte|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Svelte.ts)|
-|DEFAULT_LIT_CODESANDBOX|Lit|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Lit.ts)|
+|DEFAULT_LIT_CODESANDBOX|Lit, CSS(?)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Lit.ts)|
 
 
 #### The following explains how to use the default codesandbox preset.

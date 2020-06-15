@@ -11,7 +11,7 @@ return {
     framework: "preact",
     files: {
         "src/App.jsx": previews["Preact"][0],
-        "src/styles.css": previews["CSS"][0],
+        "src/styles.css": previews["CSS"] ? previews["CSS"][0] : "",
     },
     userDependencies: ${joinStrs(dependencies)},
 };`) as CodeSandboxTemplate;
