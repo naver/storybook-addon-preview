@@ -1,12 +1,15 @@
 {
     "name": "storybook-addon-preview",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "description": "Storybook Addon Preview can show user selected knobs in various framework code in Storybook",
     "main": "./dist/index.js",
+    "module": "./dist/esm/index.js",
     "declaration": "./dist/index.d.ts",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "tsc -p tsconfig.json && cp src/preview.css dist/preview.css"
+        "build": "rm -rf ./dist && npm run build:cjs && npm run build:esm",
+        "build:cjs": "tsc -p tsconfig.json && cp src/preview.css dist/preview.css",
+        "build:esm": "tsc -p tsconfig.esm.json && cp src/preview.css dist/esm/preview.css"
     },
     "repository": {
         "type": "git",
