@@ -11,7 +11,7 @@ return {
     framework: "react",
     files: {
         "src/App.tsx": previews["React"][0],
-        "src/styles.css": previews["CSS"][0],
+        "src/styles.css": previews["CSS"] ? previews["CSS"][0] : "",
     },
     userDependencies: ${joinStrs(dependencies)},
 };`) as CodeSandboxTemplate;

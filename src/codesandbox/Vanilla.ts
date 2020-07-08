@@ -16,7 +16,7 @@ return {
             cssFiles: ["src/styles.css"],
             jsFiles: ["src/index.ts"],
         },
-        "src/styles.css": previews["CSS"][0],
+        "src/styles.css": previews["CSS"] ? previews["CSS"][0] : "",
         "src/index.ts": previews["Vanilla"][0],
     },
     userDependencies: ${joinStrs(dependencies)},

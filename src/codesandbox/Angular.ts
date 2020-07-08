@@ -10,7 +10,7 @@ var previews = arguments[0];
 return {
     framework: "angular",
     files: {
-        "src/app/app.component.css": previews["CSS"][0],
+        "src/app/app.component.css": previews["CSS"] ? previews["CSS"][0] : "",
         "src/app/app.component.html": previews["Angular"][0],
         "src/app/app.component.ts": previews["Angular"][1],
         "src/app/app.module.ts": previews["Angular"][2],
