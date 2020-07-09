@@ -36,7 +36,7 @@ function processArrayTemplate([strings, values]: any[], knobs: { [key: string]: 
             if (typeof name === "function") {
                 try {
                     value = name(knobs);
-                } catch (e) {}
+                } catch (e) { }
             }
             if (Array.isArray(name)) {
                 value = processArrayTemplate(name, knobs);
@@ -83,7 +83,7 @@ const PreviewPanel = () => {
     const [defaultTabIndex, setTabIndex] = React.useState(-1);
     const options = [].concat(useParameter("preview", []));
     const panelRef = React.useRef<HTMLDivElement>();
-    const knobs = {...userKnobs, ...preview};
+    const knobs = { ...userKnobs, ...preview };
 
     useChannel({
         "preview": e => {
@@ -189,6 +189,14 @@ const PreviewPanel = () => {
             startNumber += code.split("\n").length;
         });
     });
+    if (!previews.length) {
+        return <div className="no-preview">
+            <h4 className="no-preview-title">No Preview found</h4>
+            <p className="no-preview-description">
+                <a href="https://github.com/naver/storybook-addon-preview" target="_blank">Learn how to dynamically create source code previews with knobs</a>
+            </p>
+        </div>
+    }
     return (
         <Tabs className={["react-tabs", "preview-tabs"]} onSelect={index => {
             setTabIndex(index);

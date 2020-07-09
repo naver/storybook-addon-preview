@@ -2,24 +2,30 @@
  * Copyright (c) 2020-present NAVER Corp.
  * egjs projects are licensed under the MIT license
  */
+
 .preview-tabs {
     margin-top: 5px;
 }
+
 .panel {
     position: relative;
     margin-top: 5px;
 }
+
 .panel .code-description {
     padding: 7px 16px 9px;
     font-weight: bold;
 }
+
 .panel form {
     z-index: 1000;
     position: absolute;
     top: 0;
     right: 0;
 }
-.panel form [type="submit"], .panel .preview-copy {
+
+.panel form [type="submit"],
+.panel .preview-copy {
     position: absolute;
     right: 15px;
     top: 0px;
@@ -34,21 +40,46 @@
     cursor: pointer;
     overflow: hidden;
 }
+
 .panel .preview-copy textarea {
     position: absolute;
     right: 100%;
 }
+
 .panel .code-preview {
     position: relative;
 }
+
 .panel .code-preview .line-highlight {
     margin-top: 0;
 }
+
 .panel form+.code-preview>.preview-copy {
     right: 130px;
 }
+
 .panel .code-preview>pre {
     margin: 0;
     padding-top: 0;
     padding-bottom: 0;
+}
+
+.no-preview {
+    padding: 30px;
+    text-align: center;
+}
+
+.no-preview-title {
+    font-size: 13px;
+    font-weight: bold;
+    margin: 0;
+    padding: 5px;
+}
+
+.no-preview-description {
+    font-size: 13px;
+}
+
+.no-preview-description a {
+    color: #4af;
 }
