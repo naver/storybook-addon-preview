@@ -27,7 +27,7 @@ export function getHighlightInfo(code: string) {
         }
         nextLine = line
             .replace(/\/\*\s*\[highlight-start\]/g, `/*`)
-            .replace(/&lt;!--\s*\[highlight-start]/g, "&lt;!--")
+            .replace(/&lt;!--\s*\[highlight-start\]/g, "&lt;!--")
             .replace(/^(\s*)\/\/\s*\[highlight-start\]/g, "$1//");
 
         if (nextLine !== line) {
@@ -37,7 +37,7 @@ export function getHighlightInfo(code: string) {
             for (let j = 0; j < length; ++j) {
                 const nextForwardCode = forwardCodes[j]
                     .replace(/\/\*\s*\[highlight-end\]/g, `/*`)
-                    .replace(/&lt;!--\s*\[highlight-end]/g, "&lt;!--")
+                    .replace(/&lt;!--\s*\[highlight-end\]/g, "&lt;!--")
                     .replace(/^(\s*)\/\/\s*\[highlight-end\]/g, "$1//");
 
                 if (nextForwardCode !== forwardCodes[j]) {
