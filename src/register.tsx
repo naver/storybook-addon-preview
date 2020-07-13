@@ -36,7 +36,7 @@ function processArrayTemplate([strings, values]: any[], knobs: { [key: string]: 
             if (typeof name === "function") {
                 try {
                     value = name(knobs);
-                } catch (e) {}
+                } catch (e) { }
             }
             if (Array.isArray(name)) {
                 value = processArrayTemplate(name, knobs);
@@ -80,10 +80,12 @@ function getInfo(options, preview) {
 const PreviewPanel = () => {
     const [userKnobs, setKnobs] = React.useState({});
     const [preview, setPreview] = React.useState<object>();
-    const [defaultTabIndex, setTabIndex] = React.useState(-1);
+    const [tabIndexInfo, setTabIndexInfo] = React.useState({
+        index: 0,
+    });
     const options = [].concat(useParameter("preview", []));
     const panelRef = React.useRef<HTMLDivElement>();
-    const knobs = {...userKnobs, ...preview};
+    const knobs = { ...userKnobs, ...preview };
 
     useChannel({
         "preview": e => {
@@ -127,7 +129,8 @@ const PreviewPanel = () => {
     for (const name in templateMap) {
         previewMap[name] = templateMap[name].map(template => template.text);
     }
-    const tabIndex = Math.max(0, Math.min(defaultTabIndex, previews.length - 1));
+    // Since there may be a missing tab, the index of the tab is forcibly changed.
+    tabIndexInfo.index = Math.max(0, Math.min(tabIndexInfo.index, previews.length - 1));
     const onCopyText = (tab: number, index: number) => {
         const copyPreview = previews[tab];
 
@@ -157,7 +160,7 @@ const PreviewPanel = () => {
             return;
         }
         const codeElements = [].slice.call(panelElement.querySelectorAll("pre code"));
-        const p = previews[tabIndex];
+        const p = previews[tabIndexInfo.index];
         if (!p) {
             codeElements.forEach(codeElement => {
                 codeElement.innerHTML = "";
@@ -189,10 +192,20 @@ const PreviewPanel = () => {
             startNumber += code.split("\n").length;
         });
     });
+    if (!previews.length) {
+        return <div className="no-preview">
+            <h4 className="no-preview-title">No Preview found</h4>
+            <p className="no-preview-description">
+                <a href="https://github.com/naver/storybook-addon-preview" target="_blank">Learn how to dynamically create source code previews with knobs</a>
+            </p>
+        </div>
+    }
     return (
         <Tabs className={["react-tabs", "preview-tabs"]} onSelect={index => {
-            setTabIndex(index);
-        }}>
+            setTabIndexInfo({
+                index,
+            });
+        }} defaultIndex={tabIndexInfo.index}>
             <TabList>
                 {previews.map(({ tab }) => <Tab key={tab}>{tab}</Tab>)}
             </TabList>
