@@ -4,6 +4,7 @@
  */
 import * as React from "react";
 import { addons, types } from "@storybook/addons";
+import { useArgs } from '@storybook/api';
 import { useChannel, useParameter } from "@storybook/api";
 import { AddonPanel } from "@storybook/components";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
@@ -23,7 +24,7 @@ import CodeSandBox from "./CodeSandBox";
 import CopyButton from "./CopyButton";
 import { getHighlightInfo } from "./utils";
 
-function processArrayTemplate([strings, values]: any[], knobs: { [key: string]: any }) {
+function processArrayTemplate([strings, values]: any[], props: { [key: string]: any }) {
     return strings.reduce((prev, next, i) => {
         let name = values[i];
 
@@ -35,13 +36,13 @@ function processArrayTemplate([strings, values]: any[], knobs: { [key: string]: 
         if (name) {
             if (typeof name === "function") {
                 try {
-                    value = name(knobs);
+                    value = name(props);
                 } catch (e) { }
             }
             if (Array.isArray(name)) {
-                value = processArrayTemplate(name, knobs);
-            } else if (name in knobs) {
-                value = JSON.stringify(knobs[name]);
+                value = processArrayTemplate(name, props);
+            } else if (name in props) {
+                value = JSON.stringify(props[name]);
             }
         }
         return prev + next + value;
@@ -78,6 +79,7 @@ function getInfo(options, preview) {
 }
 
 const PreviewPanel = () => {
+    const [args, updateArgs] = useArgs();
     const [userKnobs, setKnobs] = React.useState({});
     const [preview, setPreview] = React.useState<object>();
     const [tabIndexInfo, setTabIndexInfo] = React.useState({
@@ -91,22 +93,25 @@ const PreviewPanel = () => {
         "preview": e => {
             setPreview(e);
         },
+        "args": e => {
+            updateArgs(e);
+            setPreview(undefined);
+        },
         "knobs": e => {
             setKnobs(e);
             setPreview(undefined);
         },
     });
     options.forEach(o => {
-        const optionKnobs = o.knobs;
-        if (optionKnobs) {
-            for (const name in optionKnobs) {
-                knobs[name] = optionKnobs[name];
-            }
+        const option = o.args || o.knobs;
+        const src = !o.knobs ? 'args' : 'knobs'
+        for (const name in option) {
+            [src][name] = option[name];
         }
     });
     const templates = options
         .filter(option => "template" in option)
-        .map(option => getInfo(option, knobs || {}));
+        .map(option => getInfo(option, args || knobs || {}));
 
     const previews = [];
     const templateMap = {};
@@ -196,7 +201,7 @@ const PreviewPanel = () => {
         return <div className="no-preview">
             <h4 className="no-preview-title">No Preview found</h4>
             <p className="no-preview-description">
-                <a href="https://github.com/naver/storybook-addon-preview" target="_blank">Learn how to dynamically create source code previews with knobs</a>
+                <a href="https://github.com/naver/storybook-addon-preview" target="_blank">Learn how to dynamically create source code previews with controls or knobs</a>
             </p>
         </div>
     }
