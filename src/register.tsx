@@ -18,7 +18,8 @@ import "prismjs/plugins/line-numbers/prism-line-numbers";
 import "prismjs/plugins/line-numbers/prism-line-numbers.css";
 import "prismjs/plugins/line-highlight/prism-line-highlight";
 import "prismjs/plugins/line-highlight/prism-line-highlight.css";
-import "./preview.css";
+import "./css/preview.css";
+import "./css/prism-dark.css";
 
 import CodeSandBox from "./CodeSandBox";
 import CopyButton from "./CopyButton";
