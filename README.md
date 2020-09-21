@@ -9,6 +9,8 @@ Storybook Addon Preview can show user selected [controls(args)](https://storyboo
 [![](./images/screenshot.png)](https://naver.github.io/egjs-infinitegrid/storybook/)
 
 ## Getting Started
+* Support for Storybook 6.
+* If you use Storybook 5, use version 1.x.
 
 
 ```
