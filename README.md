@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/storybook-addon-preview.svg?style=flat-square&color=007acc&label=Version)](https://badge.fury.io/js/storybook-addon-preview)
 
-Storybook Addon Preview can show user selected [controls(args)](https://storybook.js.org/docs/react/essentials/controls) or [knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs) in various framework code in [Storybook](https://storybook.js.org/)
+Storybook Addon Preview can show user selected [args(controls)](https://github.com/storybookjs/storybook/tree/next/addons/controls) or [knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs) in various framework code in [Storybook](https://storybook.js.org/)
 
 
 
@@ -26,6 +26,74 @@ import "storybook-addon-preview/register";
 
 Now, write your stories with preview.
 
+### How to use with args(controls)
+* [Install @storybook/addon-args](https://github.com/storybookjs/storybook/tree/next/addons/controls)
+```js
+import { previewTemplate, DEFAULT_VANILLA_CODESANDBOX } from "storybook-addon-preview";
+// CSF https://storybook.js.org/docs/react/api/csf
+
+export default {
+    title: "Example",
+    decorators: [withKnobs, withPreview],
+    parameters: {
+        preview: [
+            {
+                tab: "Vanilla",
+                template: previewTemplate`
+    const inst = new Instance({
+        opt1: ${"opt1"},
+        num1: ${"num1"},
+    });
+                `,
+                language: "ts",
+                copy: true,
+                codesandbox: DEFAULT_VANILLA_CODESANDBOX(["@egjs/infinitegrid"]),
+            },
+        ],
+    },
+}
+
+export default {
+    title: "Example",
+}
+export const example = e => {
+    e.opt1;
+    e.num1;
+    return ....;
+}
+example.parameters = {
+    preview: [
+        {
+            tab: "Vanilla",
+            template: previewTemplate`
+const inst = new Instance({
+    opt1: ${"opt1"},
+    num1: ${"num1"},
+});
+            `,
+            language: "ts",
+            copy: true,
+            codesandbox: DEFAULT_VANILLA_CODESANDBOX(["@egjs/infinitegrid"]),
+        },
+    ],
+};
+example.args = {
+    opt1: false,
+    num1: 0,
+};
+example.argTypes = {
+    opt1: {
+        control: { type: "boolean" },
+        defaultValue: false,
+    },
+    num1: {
+        control: { type: "number" },
+        defaultValue: 0,
+    },
+};
+```
+### How to use with knobs
+* [Install @storybook/addon-knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs)
 ```js
 import { withPreview, previewTemplate, DEFAULT_VANILLA_CODESANDBOX } from "storybook-addon-preview";
 import { withKnobs, boolean, number } from "@storybook/addon-knobs";
@@ -34,7 +102,7 @@ const stories = storiesOf("Example", module);
 
 stories.addDecorator(withKnobs).addDecorator(withPreview);
 
-stories.add("Example", e => {
+stories.add("example", e => {
     const opt1Value = boolean("opt1", false);
     const num1Value = number("num1", 0);
 
@@ -55,6 +123,34 @@ const inst = new Instance({
         },
     ]
 });
+// CSF https://storybook.js.org/docs/react/api/csf
+
+export default {
+    title: "Example",
+    decorators: [withKnobs, withPreview],
+    parameters: {
+        preview: [
+            {
+                tab: "Vanilla",
+                template: previewTemplate`
+    const inst = new Instance({
+        opt1: ${"opt1"},
+        num1: ${"num1"},
+    });
+                `,
+                language: "ts",
+                copy: true,
+                codesandbox: DEFAULT_VANILLA_CODESANDBOX(["@egjs/infinitegrid"]),
+            },
+        ],
+    },
+}
+export const example = e => {
+    const opt1Value = boolean("opt1", false);
+    const num1Value = number("num1", 0);
+
+    return ....;
+}
 ```
 
 
