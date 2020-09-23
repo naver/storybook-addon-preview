@@ -2,14 +2,14 @@
 
 [![npm version](https://img.shields.io/npm/v/storybook-addon-preview.svg?style=flat-square&color=007acc&label=Version)](https://badge.fury.io/js/storybook-addon-preview)
 
-Storybook Addon Preview can show user selected [args(controls)](https://github.com/storybookjs/storybook/tree/next/addons/controls) or [knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs) in various framework code in [Storybook](https://storybook.js.org/)
+Storybook Addon Preview can show user selected [args(controls)](https://github.com/storybookjs/storybook/tree/master/addons/controls) or [knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs) in various framework code in [Storybook](https://storybook.js.org/)
 
 
 
 [![](./images/screenshot.png)](https://naver.github.io/egjs-infinitegrid/storybook/)
 
 ## Getting Started
-* Support for Storybook 6.
+* Storybook 6 or newer is required.
 * If you use Storybook 5, use version 1.x.
 
 
@@ -27,7 +27,7 @@ import "storybook-addon-preview/register";
 Now, write your stories with preview.
 
 ### How to use with args(controls)
-* [Install @storybook/addon-args](https://github.com/storybookjs/storybook/tree/next/addons/controls)
+* [Install @storybook/addon-args](https://github.com/storybookjs/storybook/tree/master/addons/controls)
 ```js
 import { previewTemplate, DEFAULT_VANILLA_CODESANDBOX } from "storybook-addon-preview";
 // CSF https://storybook.js.org/docs/react/api/csf
