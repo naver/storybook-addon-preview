@@ -2,7 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/storybook-addon-preview.svg?style=flat-square&color=007acc&label=Version)](https://badge.fury.io/js/storybook-addon-preview)
 
-Storybook Addon Preview can show user selected [args(controls)](https://github.com/storybookjs/storybook/tree/master/addons/controls) or [knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs) in various framework code in [Storybook](https://storybook.js.org/)
+Storybook Addon Preview can show user selected [controls(args))](https://github.com/storybookjs/storybook/tree/master/addons/controls) or [knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs) in various framework code in [Storybook](https://storybook.js.org/)
 
 
 
@@ -26,8 +26,8 @@ import "storybook-addon-preview/register";
 
 Now, write your stories with preview.
 
-### How to use with args(controls)
-* [Install @storybook/addon-args](https://github.com/storybookjs/storybook/tree/master/addons/controls)
+### How to use with controls(args)
+* [Install @storybook/addon-controls](https://github.com/storybookjs/storybook/tree/master/addons/controls)
 ```js
 import { previewTemplate, DEFAULT_VANILLA_CODESANDBOX } from "storybook-addon-preview";
 // CSF https://storybook.js.org/docs/react/api/csf
@@ -162,7 +162,7 @@ export const example = e => {
 |---|---|---|
 |tab|string|preview can show multiple tab and can determine the name of the tab. If you have the same name, you can show multiple codes on one tab.|
 |template|string, function, template|Code to display on the screen. If you use knobs, use previewTemplate. If the knobs are not used, they can be represented as strings.|
-|args(knobs)|object|Custom args(knobs) to use in preview templates, except those used in stories,|
+|args or knobs|object|Custom args or knobs to use in preview templates, except those used in stories,|
 |continue|boolean|If the tab name is the same and the code is different, enable true if you want to continue the line number.|
 |lanauge|string|Language to highlight the code in the template (js, ts, jsx, tsx, html, css)|
 |codesandbox|function|Link the code you used to the code sandbox.|
