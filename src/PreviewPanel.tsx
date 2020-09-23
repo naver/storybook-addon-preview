@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useArgs, useParameter, useChannel } from "@storybook/addons";
+import { useArgs, useParameter, useChannel } from "@storybook/api";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import * as Prism from "prismjs";
 
