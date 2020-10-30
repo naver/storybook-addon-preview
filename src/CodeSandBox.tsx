@@ -6,6 +6,7 @@ import * as React from "react";
 import { getParameters } from "codesandbox/lib/api/define";
 import {
     REACT_PRESET,
+    REACTJS_PRESET,
     PREACT_PRESET,
     ANGULAR_PRESET,
     SVELTE_PRESET,
@@ -17,6 +18,7 @@ import {
 
 const presets = {
     "react": REACT_PRESET,
+    "reactjs": REACTJS_PRESET,
     "preact": PREACT_PRESET,
     "angular": ANGULAR_PRESET,
     "svelte": SVELTE_PRESET,
