@@ -378,6 +378,7 @@ type DEFAULT_FRAMEWORK_CODESANDBOX = (dependencies: string[]) => CodeSandboxTemp
 |DEFAULT_VANILLAJS_CODESANDBOX(JS)|HTML, VANILLA, CSS(optional)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/VanillaJS.ts)|
 |DEFAULT_VANILLA_CODESANDBOX(TS)|HTML, VANILLA, CSS(optional)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Vanilla.ts)|
 |DEFAULT_REACT_CODESANDBOX(TS)|React, CSS(optional)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/React.ts)
+|DEFAULT_REACTJS_CODESANDBOX(TS)|ReactJS, CSS(optional)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/ReactJS.ts)
 |DEFAULT_ANGULAR_CODESANDBOX|Angular(html, component, module), CSS(optional)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Angular.ts)|
 |DEFAULT_VUE_CODESANDBOX|Vue|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Vue.ts)|
 |DEFAULT_SVELTE_CODESANDBOX|Svelte|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Svelte.ts)|
