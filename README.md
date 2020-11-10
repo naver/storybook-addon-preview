@@ -164,7 +164,7 @@ export const example = e => {
 |template|string, function, template|Code to display on the screen. If you use knobs, use previewTemplate. If the knobs are not used, they can be represented as strings.|
 |args or knobs|object|Custom args or knobs to use in preview templates, except those used in stories,|
 |continue|boolean|If the tab name is the same and the code is different, enable true if you want to continue the line number.|
-|lanauge|string|Language to highlight the code in the template (js, ts, jsx, tsx, html, css)|
+|language|string|Language to highlight the code in the template (js, ts, jsx, tsx, html, css)|
 |codesandbox|function|Link the code you used to the code sandbox.|
 |copy|boolean|Whether to show the copy code button|
 
