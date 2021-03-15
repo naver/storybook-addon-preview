@@ -2,12 +2,11 @@
  * Copyright (c) 2020-present NAVER Corp.
  * egjs projects are licensed under the MIT license
  */
-import addons, { makeDecorator } from '@storybook/addons';
-import * as registerKnobs from "@storybook/addon-knobs/dist/registerKnobs";
+import addons, { makeDecorator, useChannel } from '@storybook/addons';
+import { RESET, SET } from "@storybook/addon-knobs";
 import { OBJECT_TEMPLATE } from './props';
 
-function getKnobs() {
-    const knobs = registerKnobs.manager.knobStore.getAll();
+function getKnobValues(knobs: Record<string, { value: any }>) {
     const obj = {};
 
     for (const name in knobs) {
@@ -43,8 +42,9 @@ export const withPreview = makeDecorator({
     wrapper: (storyFn, context) => {
         const channel = addons.getChannel();
 
-        requestAnimationFrame(() => {
-            channel.emit("knobs", getKnobs());
+        useChannel({
+            [SET]: ({ knobs }) => channel.emit("knobs", getKnobValues(knobs)),
+            [RESET]: () => channel.emit("knobs", {}),
         });
         return storyFn(context);
     },

@@ -84,7 +84,7 @@ const PreviewPanel = () => {
     });
     const options = [].concat(useParameter("preview", []));
     const panelRef = React.useRef<HTMLDivElement>();
-    const props = { ...(args || userKnobs), ...preview };
+    const props = { ...(userKnobs || {}), ...(args || {}), ...preview };
 
     useChannel({
         "preview": e => {
