@@ -1,6 +1,6 @@
 {
     "name": "storybook-addon-preview",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "description": "Storybook Addon Preview can show user selected knobs in various framework code in Storybook",
     "main": "./dist/index.js",
     "module": "./dist/esm/index.js",
