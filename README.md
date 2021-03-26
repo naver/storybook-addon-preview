@@ -6,7 +6,7 @@ Storybook Addon Preview can show user selected [controls(args))](https://github.
 
 
 
-[![](./images/screenshot.png)](https://naver.github.io/egjs-infinitegrid/storybook/)
+[![](https://raw.githubusercontent.com/naver/storybook-addon-preview/master/images/screenshot.png)](https://naver.github.io/egjs-infinitegrid/storybook/)
 
 ## Getting Started
 * Storybook 6 or newer is required.
@@ -18,10 +18,14 @@ npm i storybook-addon-preview --dev
 ```
 
 
-.storybook/addons.js
+.storybook/main.js
 
 ```js
-import "storybook-addon-preview/register";
+module.exports = {
+    addons: [
+        "storybook-addon-preview/register"
+    ],
+};
 ```
 
 Now, write your stories with preview.
@@ -31,27 +35,6 @@ Now, write your stories with preview.
 ```js
 import { previewTemplate, DEFAULT_VANILLA_CODESANDBOX } from "storybook-addon-preview";
 // CSF https://storybook.js.org/docs/react/api/csf
-
-export default {
-    title: "Example",
-    decorators: [withKnobs, withPreview],
-    parameters: {
-        preview: [
-            {
-                tab: "Vanilla",
-                template: previewTemplate`
-    const inst = new Instance({
-        opt1: ${"opt1"},
-        num1: ${"num1"},
-    });
-                `,
-                language: "ts",
-                copy: true,
-                codesandbox: DEFAULT_VANILLA_CODESANDBOX(["@egjs/infinitegrid"]),
-            },
-        ],
-    },
-}
 
 export default {
     title: "Example",

@@ -1,52 +1,52 @@
 {
-  "name": "storybook-addon-preview",
-  "version": "2.1.1",
-  "description": "Storybook Addon Preview can show user selected knobs in various framework code in Storybook",
-  "main": "./dist/index.js",
-  "module": "./dist/esm/index.js",
-  "declaration": "./dist/index.d.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rm -rf ./dist && npm run build:cjs && npm run build:esm",
-    "build:cjs": "tsc -p tsconfig.json && cpx 'src/css/*.css' 'dist/css'",
-    "build:esm": "tsc -p tsconfig.esm.json && cpx 'src/css/*.css' 'dist/esm/css'"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/naver/storybook-addon-preview.git"
-  },
-  "author": {
-    "name": "NAVER Corp."
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/naver/storybook-addon-preview/issues"
-  },
-  "keywords": [
-    "storybook",
-    "addon",
-    "preview",
-    "storybook-addon",
-    "code"
-  ],
-  "homepage": "https://github.com/naver/storybook-addon-preview#readme",
-  "dependencies": {
-    "@types/prismjs": "^1.16.0",
-    "@types/react-tabs": "^2.3.2",
-    "codesandbox": "^2.1.10",
-    "prismjs": "^1.17.1",
-    "react-tabs": "^3.0.0",
-    "@storybook/addon-knobs": "^6.0.0"
-  },
-  "devDependencies": {
-    "@storybook/addons": "^6.0.21",
-    "@storybook/api": "^6.0.21",
-    "@storybook/components": "^6.0.21",
-    "@types/node": "^12.12.7",
-    "@types/react": "^16.9.11",
-    "cpx": "^1.5.0",
-    "react": "^16.11.0",
-    "tslint": "^6.0.0",
-    "typescript": "^3.7.2"
-  }
+    "name": "storybook-addon-preview",
+    "version": "2.1.2",
+    "description": "Storybook Addon Preview can show user selected knobs in various framework code in Storybook",
+    "main": "./dist/index.js",
+    "module": "./dist/esm/index.js",
+    "declaration": "./dist/index.d.ts",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "build": "rm -rf ./dist && npm run build:cjs && npm run build:esm",
+        "build:cjs": "tsc -p tsconfig.json && cpx 'src/css/*.css' 'dist/css'",
+        "build:esm": "tsc -p tsconfig.esm.json && cpx 'src/css/*.css' 'dist/esm/css'"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/naver/storybook-addon-preview.git"
+    },
+    "author": {
+        "name": "NAVER Corp."
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/naver/storybook-addon-preview/issues"
+    },
+    "keywords": [
+        "storybook",
+        "addon",
+        "preview",
+        "storybook-addon",
+        "code"
+    ],
+    "homepage": "https://github.com/naver/storybook-addon-preview#readme",
+    "dependencies": {
+        "@types/prismjs": "^1.16.0",
+        "@types/react-tabs": "^2.3.2",
+        "codesandbox": "^2.1.10",
+        "prismjs": "^1.17.1",
+        "react-tabs": "^3.0.0",
+        "@storybook/addon-knobs": "^6.0.0"
+    },
+    "devDependencies": {
+        "@storybook/addons": "^6.0.21",
+        "@storybook/api": "^6.0.21",
+        "@storybook/components": "^6.0.21",
+        "@types/node": "^12.12.7",
+        "@types/react": "^16.9.11",
+        "cpx": "^1.5.0",
+        "react": "^16.11.0",
+        "tslint": "^6.0.0",
+        "typescript": "^3.7.2"
+    }
 }
