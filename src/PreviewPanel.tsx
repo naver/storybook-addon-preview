@@ -214,7 +214,7 @@ const PreviewPanel = () => {
             {previews.map(({ codesandbox, tab, templates: previewTemplates }, i) => {
                 return (<TabPanel key={tab}>
                     <div className="panel" ref={panelRef}>
-                        {codesandbox && <CodeSandBox info={typeof codesandbox === "function" ? codesandbox(previewMap) : codesandbox} />}
+                        {codesandbox && <CodeSandBox info={typeof codesandbox === "function" ? codesandbox(previewMap) : codesandbox} previews={previewMap} />}
                         {previewTemplates.map(({ language, description, copy }, j) => {
                             return <div className="code-preview" key={j}>
                                 {copy && <CopyButton tab={i} index={j} onCopyText={onCopyText} />}

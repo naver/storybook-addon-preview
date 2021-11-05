@@ -7,3 +7,4 @@ export * from "./Svelte";
 export * from "./Vanilla";
 export * from "./VanillaJS";
 export * from "./Vue";
+export * from "./Vue3";
