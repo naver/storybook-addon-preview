@@ -8,7 +8,7 @@ storybook-addon-preview has several style guidelines to follow.
 Before your start, please read attentively below instructions.
 
 
-### How to add CodeSandbox preset
+## How to add CodeSandbox preset
 
 * `template` is based on [this](https://github.com/codesandbox/codesandbox-importers/blob/master/packages/import-utils/src/create-sandbox/templates.ts#L63) logic.
 * `dependencies`, `devDependencies`, `scripts` are based on `package.json`'s `dependencies`, `devDependencies`, `scripts`
