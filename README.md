@@ -331,16 +331,28 @@ There is a dependency and initial settings file for linking code sandboxes.
 The frameworks we support are react, angular, svelte, lit, preact, and vue.
 
 ```js
-const CodeSandboxTemplate = (previews) => ({
-    // react, angular, svelte, lit, preact, vue
-    framework: "FRAMEWORK_TYPE",
-      files: {
-        // Tab name and code order (Mostly 0)
-        "src/App.tsx": previews["TAB NAME"][0],
-        "src/styles.css": previews["TAB NAME2"][0],
+const CodeSandboxValue = {
+    // https://github.com/codesandbox/codesandbox-importers/blob/master/packages/import-utils/src/create-sandbox/templates.ts#L63
+    template: "vue-cli",
+    files: {
+        "src/main.js": `
+import Vue from "vue";
+import App from "./App.vue";
+
+Vue.config.productionTip = false;
+
+new Vue({
+render: h => h(App)
+}).$mount("#app");
+    `,
+        "src/App.vue": {
+            tab: "Vue",
+        },
     },
-    // External modules except framework modules used in code
-    userDependencies: ["@egjs/react-infinitegrid@latest"],
+    dependencies: {
+        "vue": "^2.6.0",
+    },
+    userDependencies: ["@egjs/vue-infinitegrid@^3"],
 });
 ```
 
@@ -351,7 +363,7 @@ const CodeSandboxTemplate = (previews) => ({
 // DEFAULT_(VANILLA)_CODESANDBOX
 // DEFAULT_(REACT)_CODESANDBOX
 // DEFAULT_(ANGULAR)_CODESANDBOX
-type DEFAULT_FRAMEWORK_CODESANDBOX = (dependencies: string[] = [], files: FileParam = {}) => CodeSandboxTemplate;
+type DEFAULT_FRAMEWORK_CODESANDBOX: CodeSandboxTemplate = (userDependencies?: string[], files?: FilesParam) => CodeSandboxValue;
 ```
 
 * The codesandbox presets provided in the preview are vanilla, react, angular, vue, preact, lit and svelte.
@@ -503,11 +515,12 @@ import {
     ],
 };
 ```
-#### Make Custom Codesandbox
+#### Make Custom CodeSandbox
 
 * `template` is based on [this](https://github.com/codesandbox/codesandbox-importers/blob/master/packages/import-utils/src/create-sandbox/templates.ts#L63) logic.
-* `dependencies`, `devDependencies` are based on `package.json`'s `dependencies`, `devDependencies`
+* `dependencies`, `devDependencies`, `scripts` are based on `package.json`'s `dependencies`, `devDependencies`, `scripts`
 * `userDependencies` are dependencies of type array. ([`vue@^2.6.0`])
+* `scripts`
 * `files` has string, [CodeFileTab(object)](https://github.com/naver/storybook-addon-preview/blob/master/src/types.ts), and null types.
     * CodeFileTab: Returns the preview tab as a string value.
     * null: Delete the existing file.
