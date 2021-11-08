@@ -4,6 +4,7 @@
  */
 export interface CodeSandboxValue {
     template?: string;
+    scripts?: Record<string, any>;
     files: FilesParam;
     dependencies?: Record<string, string>;
     devDependencies?: Record<string, string>;

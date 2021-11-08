@@ -37,6 +37,7 @@ export function getCodeSandBox(param: CodeSandboxValue, previews: Record<string,
         dependencies,
         devDependencies,
         userDependencies = [],
+        scripts,
     } = param;
 
     const obj: {
@@ -60,6 +61,9 @@ export function getCodeSandBox(param: CodeSandboxValue, previews: Record<string,
         const version = result && result[2] ? result[2] : "latest";
         packageDendencies[name] = version;
     });
+    if (scripts) {
+        obj["package.json"].content.scripts = scripts;
+    }
     if (template) {
         obj["sandbox.config.json"] = {
             content: {
