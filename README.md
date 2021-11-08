@@ -331,16 +331,28 @@ There is a dependency and initial settings file for linking code sandboxes.
 The frameworks we support are react, angular, svelte, lit, preact, and vue.
 
 ```js
-const CodeSandboxTemplate = (previews) => ({
-    // react, angular, svelte, lit, preact, vue
-    framework: "FRAMEWORK_TYPE",
-      files: {
-        // Tab name and code order (Mostly 0)
-        "src/App.tsx": previews["TAB NAME"][0],
-        "src/styles.css": previews["TAB NAME2"][0],
+const CodeSandboxValue = {
+    // https://github.com/codesandbox/codesandbox-importers/blob/master/packages/import-utils/src/create-sandbox/templates.ts#L63
+    template: "vue-cli",
+    files: {
+        "src/main.js": `
+import Vue from "vue";
+import App from "./App.vue";
+
+Vue.config.productionTip = false;
+
+new Vue({
+render: h => h(App)
+}).$mount("#app");
+    `,
+        "src/App.vue": {
+            tab: "Vue",
+        },
     },
-    // External modules except framework modules used in code
-    userDependencies: ["@egjs/react-infinitegrid@latest"],
+    dependencies: {
+        "vue": "^2.6.0",
+    },
+    userDependencies: ["@egjs/vue-infinitegrid@^3"],
 });
 ```
 
@@ -351,12 +363,12 @@ const CodeSandboxTemplate = (previews) => ({
 // DEFAULT_(VANILLA)_CODESANDBOX
 // DEFAULT_(REACT)_CODESANDBOX
 // DEFAULT_(ANGULAR)_CODESANDBOX
-type DEFAULT_FRAMEWORK_CODESANDBOX = (dependencies: string[]) => CodeSandboxTemplate;
+type DEFAULT_FRAMEWORK_CODESANDBOX: CodeSandboxTemplate = (userDependencies?: string[], files?: FilesParam) => CodeSandboxValue;
 ```
 
 * The codesandbox presets provided in the preview are vanilla, react, angular, vue, preact, lit and svelte.
 
-|Name|Required Tab Names|Code|
+|Name|Default Tab Names|Code|
 |----|---|---|
 |DEFAULT_VANILLAJS_CODESANDBOX(JS)|HTML, VANILLA, CSS(optional)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/VanillaJS.ts)|
 |DEFAULT_VANILLA_CODESANDBOX(TS)|HTML, VANILLA, CSS(optional)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Vanilla.ts)|
@@ -364,6 +376,7 @@ type DEFAULT_FRAMEWORK_CODESANDBOX = (dependencies: string[]) => CodeSandboxTemp
 |DEFAULT_REACTJS_CODESANDBOX(TS)|ReactJS, CSS(optional)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/ReactJS.ts)
 |DEFAULT_ANGULAR_CODESANDBOX|Angular(html, component, module), CSS(optional)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Angular.ts)|
 |DEFAULT_VUE_CODESANDBOX|Vue|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Vue.ts)|
+|DEFAULT_VUE3_CODESANDBOX|Vue3|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Vue3.ts)|
 |DEFAULT_SVELTE_CODESANDBOX|Svelte|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Svelte.ts)|
 |DEFAULT_LIT_CODESANDBOX|Lit, CSS(optional)|[View Code](https://github.com/naver/storybook-addon-preview/blob/master/src/codesandbox/Lit.ts)|
 
@@ -381,29 +394,29 @@ import {
 {
     preview: [
         {
-            // previews["HTML"][0]
+            // { tab: "HTML" }
             tab: "HTML",
             template: ...,
         },
         {
-            // previews["CSS"][0]
+            // { tab: "CSS" }
             tab: "CSS",
             template: ...,
         },
         {
-            // previews["Vaniila"][0]
+            // { tab: "Vanilla" }
             tab: "Vanilla",
             template: ...,
-            codesandbox: DEFAULT_REACT_CODESANDBOX(["@egjs/infinitegrid"]),
-        }
+            codesandbox: DEFAULT_VANILLA_CODESANDBOX(["@egjs/infinitegrid"]),
+        },
         {
-            // previews["React"][0]
+            // { tab: "React" }
             tab: "React",
             template: ...,
             codesandbox: DEFAULT_REACT_CODESANDBOX(["@egjs/react-infinitegrid"]),
         },
         {
-            // previews["Angular"][0]
+            // { tab: "Angular", index: 0 }
             tab: "Angular",
             description: "app.component.html",
             template: ...,
@@ -411,7 +424,7 @@ import {
             codesandbox: DEFAULT_ANGULAR_CODESANDBOX(["@egjs/ngx-infinitegrid"]),
         },
         {
-            // previews["Angular"][1]
+            // { tab: "Angular", index: 1 }
             tab: "Angular",
             description: "app.component.ts",
             template: ...,
@@ -419,7 +432,7 @@ import {
             codesandbox: DEFAULT_ANGULAR_CODESANDBOX(["@egjs/ngx-infinitegrid"]),
         },
         {
-            // previews["Angular"][2]
+            // { tab: "Angular", index: 2 }
             tab: "Angular",
             description: "app.module.ts",
             template: ...,
@@ -430,10 +443,118 @@ import {
 }
 ```
 
+#### Change tab names
 
+Check the code sandbox preset code for the file names.
 
+```js
+import {
+    DEFAULT_VANILLA_CODESANDBOX,
+    DEFAULT_REACT_CODESANDBOX,
+    DEFAULT_ANGULAR_CODESANDBOX,
+} from "storybook-addon-preview";
 
+{
+    preview: [
+        {
+            tab: "Custom HTML",
+            template: ...,
+        },
+        {
+            tab: "Custom CSS",
+            template: ...,
+        },
+        {
+            tab: "Vanilla",
+            template: ...,
+            codesandbox: DEFAULT_VANILLA_CODESANDBOX(["@egjs/infinitegrid"], {
+                "index.html": {
+                    tab: "Custom HTML",
+                    template: "html",
+                    values: {
+                        cssFiles: ["src/styles.css"],
+                        jsFiles: ["src/index.ts"],
+                    },
+                },
+                "src/styles.css" : { tab: "Custom CSS" },
+            }),
+        },
+        {
+            tab: "Angular Component HTML",
+            description: "app.component.html",
+            template: ...,
+            language: "markup",
+            codesandbox: DEFAULT_ANGULAR_CODESANDBOX(["@egjs/ngx-infinitegrid"], {
+                "src/app/app.component.html": { tab: "Angular Component HTML" },
+                "src/app/app.component.ts": { tab: "Angular Component" },
+                "src/app/app.module.ts": { tab: "Angular Module" },
+            }),
+        },
+        {
+            tab: "Angular Component",
+            description: "app.component.ts",
+            template: ...,
+            language: "tsx",
+            codesandbox: DEFAULT_ANGULAR_CODESANDBOX(["@egjs/ngx-infinitegrid"], {
+                "src/app/app.component.html": { tab: "Angular Component HTML" },
+                "src/app/app.component.ts": { tab: "Angular Component" },
+                "src/app/app.module.ts": { tab: "Angular Module" },
+            }),
+        },
+        {
+            tab: "Angular Module",
+            description: "app.module.ts",
+            template: ...,
+            language: "typescript",
+            codesandbox: DEFAULT_ANGULAR_CODESANDBOX(["@egjs/ngx-infinitegrid"], {
+                "src/app/app.component.html": { tab: "Angular Component HTML" },
+                "src/app/app.component.ts": { tab: "Angular Component" },
+                "src/app/app.module.ts": { tab: "Angular Module" },
+            }),
+        },
+    ],
+};
+```
+#### Make Custom CodeSandbox
 
+* `template` is based on [this](https://github.com/codesandbox/codesandbox-importers/blob/master/packages/import-utils/src/create-sandbox/templates.ts#L63) logic.
+* `dependencies`, `devDependencies`, `scripts` are based on `package.json`'s `dependencies`, `devDependencies`, `scripts`
+* `userDependencies` are dependencies of type array. ([`vue@^2.6.0`])
+* `scripts`
+* `files` has string, [CodeFileTab(object)](https://github.com/naver/storybook-addon-preview/blob/master/src/types.ts), and null types.
+    * CodeFileTab: Returns the preview tab as a string value.
+    * null: Delete the existing file.
+
+CodeSandbox supports various templates. To use the template, you need to define the basic files yourself. Please refer to the template in the CodeSandbox.
+
+```js
+export const DEFAULT_VUE_CODESANDBOX: CodeSandboxTemplate = (userDependencies = [], files = {}) => {
+    return {
+        template: "vue-cli",
+        files: {
+            "src/main.js": `
+import Vue from "vue";
+import App from "./App.vue";
+
+Vue.config.productionTip = false;
+
+new Vue({
+    render: h => h(App)
+}).$mount("#app");
+        `,
+            "src/App.vue": {
+                tab: "Vue",
+            },
+            ...files,
+        },
+        dependencies: {
+            "vue": "^2.6.0",
+        },
+        userDependencies,
+    };
+};
+
+```
 ## License
 **storybook-addon-preview** is released under the [MIT license](https://raw.githubusercontent.com/naver/egjs/master/LICENSE.txt).
 

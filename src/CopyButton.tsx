@@ -24,13 +24,18 @@ function copyTextarea(text: string, copyInput: HTMLTextAreaElement) {
     const selection = window.getSelection();
     selection.removeAllRanges();
     selection.addRange(range);
-    copyInput.setSelectionRange(0, copyInput.value.length); // A big number, to cover anything that could be inside the element.
+    // A big number, to cover anything that could be inside the element.
+    copyInput.setSelectionRange(0, copyInput.value.length);
     copyInput.focus();
     document.execCommand('copy');
     alert("You have copied the code.");
 }
 
-export default function CopyButton({ tab, index, onCopyText }) {
+export default function CopyButton({ tab, index, onCopyText }: {
+    tab: number;
+    index: number;
+    onCopyText: (tab: number, index: number) => string;
+}) {
     const textareaRef = React.useRef();
     const onClick = React.useCallback(() => {
         const text = onCopyText(tab, index);
@@ -44,5 +49,8 @@ export default function CopyButton({ tab, index, onCopyText }) {
     const onSelect = React.useCallback(() => {
         document.execCommand('copy');
     }, []);
-    return (<button className="preview-copy" onClick={onClick}>Copy<textarea ref={textareaRef} onSelect={onSelect}></textarea></button>);
-};
+    return (<button className="preview-copy" onClick={onClick}>
+        Copy
+        <textarea ref={textareaRef} onSelect={onSelect}></textarea>
+    </button>);
+}

@@ -2,16 +2,29 @@
  * Copyright (c) 2020-present NAVER Corp.
  * egjs projects are licensed under the MIT license
  */
-import { joinStrs } from "../utils";
 import { CodeSandboxTemplate } from "../types";
 
-export const DEFAULT_PREACT_CODESANDBOX = (dependencies: string[]) => new Function(`
-var previews = arguments[0];
-return {
-    framework: "preact",
-    files: {
-        "src/App.jsx": previews["Preact"][0],
-        "src/styles.css": previews["CSS"] ? previews["CSS"][0] : "",
-    },
-    userDependencies: ${joinStrs(dependencies)},
-};`) as CodeSandboxTemplate;
+export const DEFAULT_PREACT_CODESANDBOX: CodeSandboxTemplate = (userDependencies = [], files = {}) => {
+    return {
+        template: "preact-cli",
+        files: {
+            "src/index.js": `import { Component, h, render } from "preact";
+import App from "./App";
+import "./styles.css";
+
+render(<App />, document.querySelector("#root"));
+`,
+            "src/App.jsx": {
+                tab: "Preact",
+            },
+            "src/styles.css": {
+                tab: "CSS",
+            },
+            ...files,
+        },
+        dependencies: {
+            preact: "latest",
+        },
+        userDependencies,
+    };
+};

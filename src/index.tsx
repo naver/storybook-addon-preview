@@ -7,7 +7,7 @@ import { RESET, SET } from "@storybook/addon-knobs";
 import { OBJECT_TEMPLATE } from './props';
 
 function getKnobValues(knobs: Record<string, { value: any }>) {
-    const obj = {};
+    const obj: Record<string, any> = {};
 
     for (const name in knobs) {
         obj[name] = knobs[name].value;
@@ -19,7 +19,7 @@ export const preview = (parameter: any) => {
     const channel = addons.getChannel();
 
     channel.emit("preview", parameter);
-}
+};
 
 export function raw(name: string) {
     return new Function(`

@@ -54,5 +54,5 @@ export function getHighlightInfo(code: string) {
     return {
         lines: highlightLines.map(line => line.join("-")),
         code: nextCodes.join("\n"),
-    }
+    };
 }

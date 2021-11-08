@@ -4,34 +4,16 @@
  */
 import * as React from "react";
 import { getParameters } from "codesandbox/lib/api/define";
-import {
-    REACT_PRESET,
-    REACTJS_PRESET,
-    PREACT_PRESET,
-    ANGULAR_PRESET,
-    SVELTE_PRESET,
-    VUE_PRESET,
-    LIT_PRESET,
-    VANILLA_PRESET,
-} from "./presets/index";
+import { CodeSandboxValue } from ".";
 
-
-const presets = {
-    "react": REACT_PRESET,
-    "reactjs": REACTJS_PRESET,
-    "preact": PREACT_PRESET,
-    "angular": ANGULAR_PRESET,
-    "svelte": SVELTE_PRESET,
-    "vue": VUE_PRESET,
-    "lit": LIT_PRESET,
-    "vanilla": VANILLA_PRESET,
-};
-export function previewCodeSandBoxHTML(params: {
-    html: string,
-    cssFiles: string[],
-    jsFiles: string[],
+export function previewCodeSandBoxHTML(html: string, params?: {
+    cssFiles?: string[];
+    jsFiles?: string[];
 }) {
-    const { html, cssFiles, jsFiles } = params;
+    const {
+        cssFiles = [],
+        jsFiles = [],
+    } = params || {};
     return `<html>
 <head>
     <title>Parcel Sandbox</title>
@@ -48,14 +30,15 @@ ${jsFiles.map(file => `
 </html>`;
 }
 
-export function getCodeSandBox(param: { framework: string, files: { [key: string]: any }, userDependencies: string[] }) {
-    const { framework, files = {}, userDependencies = [] } = param;
+export function getCodeSandBox(param: CodeSandboxValue, previews: Record<string, string[]>) {
     const {
+        template,
+        files = {},
         dependencies,
         devDependencies,
-        template,
-        files: presetFiles,
-    } = presets[framework];
+        userDependencies = [],
+        scripts,
+    } = param;
 
     const obj: {
         [key: string]: any;
@@ -65,14 +48,12 @@ export function getCodeSandBox(param: { framework: string, files: { [key: string
                 dependencies: {
                     ...(dependencies || {}),
                 },
+                devDependencies: {
+                    ...(devDependencies || {}),
+                },
             },
         },
     };
-    if (devDependencies) {
-        obj["package.json"].content.devDependencies = {
-            ...devDependencies,
-        };
-    }
     const packageDendencies = obj["package.json"].content.dependencies;
     userDependencies.forEach(userModule => {
         const result = /^(@*[^@]+)@*([^@/]+)*$/g.exec(userModule);
@@ -80,6 +61,9 @@ export function getCodeSandBox(param: { framework: string, files: { [key: string
         const version = result && result[2] ? result[2] : "latest";
         packageDendencies[name] = version;
     });
+    if (scripts) {
+        obj["package.json"].content.scripts = scripts;
+    }
     if (template) {
         obj["sandbox.config.json"] = {
             content: {
@@ -87,20 +71,27 @@ export function getCodeSandBox(param: { framework: string, files: { [key: string
             },
         };
     }
-    for (const fileName in presetFiles) {
-        obj[fileName] = {
-            content: presetFiles[fileName],
-        }
-    }
     for (const fileName in files) {
         let content = files[fileName];
 
+        if (content === null) {
+            continue;
+        }
         if (typeof content === "object") {
-            const contentTemplate = content.template;
+            const tabName = content.tab;
+            const index = content?.index ?? -1;
+            const texts = previews[tabName] || [];
+            let text = "";
 
-            if (contentTemplate === "html") {
-                content = previewCodeSandBoxHTML(content);
+            if (index > -1) {
+                text = texts[index] || "";
+            } else {
+                text = texts.join("\n");
             }
+            if (content.template === "html") {
+                text = previewCodeSandBoxHTML(text, content.values);
+            }
+            content = text;
         }
         obj[fileName] = {
             content,
@@ -109,14 +100,16 @@ export function getCodeSandBox(param: { framework: string, files: { [key: string
     return getParameters({
         files: obj,
     });
+}
 
-};
-
-export default function CodeSandBox({ info }) {
-    const parameters = getCodeSandBox(info);
+export default function CodeSandBox({ info, previews }: {
+    info: CodeSandboxValue;
+    previews: Record<string, string[]>;
+}) {
+    const parameters = getCodeSandBox(info, previews);
     return (
         <form action="https://codesandbox.io/api/v1/sandboxes/define" method="POST" target="_blank">
             <input type="hidden" name="parameters" value={parameters} />
             <input type="submit" value="Open SandBox" />
         </form>);
-};
+}
