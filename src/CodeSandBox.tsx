@@ -96,14 +96,16 @@ export function getCodeSandBox(param: CodeSandboxValue, previews: Record<string,
     return getParameters({
         files: obj,
     });
+}
 
-};
-
-export default function CodeSandBox({ info, previews }) {
+export default function CodeSandBox({ info, previews }: {
+    info: CodeSandboxValue;
+    previews: Record<string, string[]>;
+}) {
     const parameters = getCodeSandBox(info, previews);
     return (
         <form action="https://codesandbox.io/api/v1/sandboxes/define" method="POST" target="_blank">
             <input type="hidden" name="parameters" value={parameters} />
             <input type="submit" value="Open SandBox" />
         </form>);
-};
+}

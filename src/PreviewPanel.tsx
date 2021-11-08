@@ -197,9 +197,11 @@ const PreviewPanel = () => {
         return <div className="no-preview">
             <h4 className="no-preview-title">No Preview found</h4>
             <p className="no-preview-description">
-                <a href="https://github.com/naver/storybook-addon-preview" target="_blank">Learn how to dynamically create source code previews with controls or knobs</a>
+                <a href="https://github.com/naver/storybook-addon-preview" target="_blank" rel="noreferrer">
+                    Learn how to dynamically create source code previews with controls or knobs
+                </a>
             </p>
-        </div>
+        </div>;
     }
     return (
         <Tabs className={["react-tabs", "preview-tabs"]} onSelect={index => {
@@ -214,7 +216,9 @@ const PreviewPanel = () => {
             {previews.map(({ codesandbox, tab, templates: previewTemplates }, i) => {
                 return (<TabPanel key={tab}>
                     <div className="panel" ref={panelRef}>
-                        {codesandbox && <CodeSandBox info={typeof codesandbox === "function" ? codesandbox(previewMap) : codesandbox} previews={previewMap} />}
+                        {codesandbox && <CodeSandBox info={typeof codesandbox === "function"
+                            ? codesandbox(previewMap)
+                            : codesandbox} previews={previewMap} />}
                         {previewTemplates.map(({ language, description, copy }, j) => {
                             return <div className="code-preview" key={j}>
                                 {copy && <CopyButton tab={i} index={j} onCopyText={onCopyText} />}
@@ -222,7 +226,7 @@ const PreviewPanel = () => {
                                 <pre className={`language-${language} line-numbers`} style={{
                                     backgroundColor: "transparent",
                                 }}><code className={`language-${language} line-numbers`}></code></pre>
-                            </div>
+                            </div>;
                         })}
                     </div>
                 </TabPanel>);

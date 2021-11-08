@@ -13,7 +13,7 @@ function replaceOnce(func: string, regx: RegExp, callback: (...args: any[]) => s
         }
         isFirst = false;
         return callback(all, ...args);
-    })
+    });
 }
 
 export function removeThis(func: string) {
@@ -31,7 +31,7 @@ export function toReactArrow(func: string) {
 export function toSvelteArrow(func: string) {
     return replaceOnce(
         func, /function ([^(]+)([^)]+\))/g,
-        (_, a1, a2) => `${a1.replace(/on([A-Z])/g, (_2, c) => `on:${c.toLowerCase()}`)}={${a2} =>`,
+        (_: any, a1: string, a2: string) => `${a1.replace(/on([A-Z])/g, (_2: any, c: string) => `on:${c.toLowerCase()}`)}={${a2} =>`,
     ) + "}";
 }
 export function toArrowMethod(func: string) {
@@ -51,12 +51,12 @@ export function toCustomEvent(func: string) {
 }
 export function removeBracket(func: string) {
     return replaceOnce(func, /(\([^)]+\))\s?=>\s?\{/g, (all, a1) => {
-        return /\{|\}|\,/g.exec(a1) ? all : `${a1.replace(/\(|\)/g, "")} => {`;
+        return /\{|\}|,/g.exec(a1) ? all : `${a1.replace(/\(|\)/g, "")} => {`;
     });
 }
 
-export function includeComment(func: string, comment: string, external: string = "") {
-    return func.replace(new RegExp(`\\\/\\\/${comment}(?:-([^\\\s]*))*\\\s`, "g"), (all, type) => {
+export function includeComment(func: string, comment: string, external = "") {
+    return func.replace(new RegExp(`\\/\\/${comment}(?:-([^\\s]*))*\\s`, "g"), (all, type) => {
         if ((type && external && type.indexOf(external) > -1)) {
             return all;
         }
@@ -97,11 +97,11 @@ export function previewFunction(func: string) {
         rv = includeComment(rv, "", comment);
         rv = includeComment(rv, comment);
         // remove all comments
-        rv = rv.replace(new RegExp(`\\\n\\\s*\\\/\\\/[^\\n]*$`, "mg"), "");
+        rv = rv.replace(new RegExp(`\\\n\\s*\\/\\/[^\\n]*$`, "mg"), "");
         return rv;
     };
 }
-export function space(indent) {
+export function space(indent: number) {
     const texts: string[] = [];
     for (let i = 0; i < indent; ++i) {
         texts.push(" ");
@@ -111,13 +111,17 @@ export function space(indent) {
 export function codeIndent(text: string, {
     startIndent = 0,
     indent = 4,
-    endIndet = indent,
+    endIndent = indent,
+}: {
+    startIndent?: number;
+    indent?: number;
+    endIndent?: number;
 }) {
     const texts = text.trim().split("\n");
     const length = texts.length;
 
     return texts.map((t, i) => {
-        return space(i === 0 ? startIndent : (i === length - 1 ? endIndet : indent)) + t;
+        return space(i === 0 ? startIndent : (i === length - 1 ? endIndent : indent)) + t;
     }).join("\n");
 }
 

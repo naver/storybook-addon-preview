@@ -1,5 +1,5 @@
 import * as React from "react";
-import { DEFAULT_REACT_CODESANDBOX, DEFAULT_VUE3_CODESANDBOX, DEFAULT_VUE_CODESANDBOX } from "../../dist";
+import { DEFAULT_REACT_CODESANDBOX, DEFAULT_VUE3_CODESANDBOX, DEFAULT_VUE_CODESANDBOX } from "../../src";
 import { makeArgs, makeArgType } from "./utils";
 
 export default {

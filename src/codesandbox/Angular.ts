@@ -2,9 +2,7 @@
  * Copyright (c) 2020-present NAVER Corp.
  * egjs projects are licensed under the MIT license
  */
-import { FilesParam } from "..";
 import { CodeSandboxTemplate } from "../types";
-import { joinStrs } from "../utils";
 
 export const DEFAULT_ANGULAR_CODESANDBOX: CodeSandboxTemplate = (userDependencies = [], files = {}) => {
     return {

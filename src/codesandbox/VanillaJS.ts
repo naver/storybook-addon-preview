@@ -4,7 +4,7 @@
  */
 import { CodeSandboxTemplate } from "../types";
 
-export const DEFAULT_VANILLA_CODESANDBOX: CodeSandboxTemplate = (userDependencies = [], files = {}) => {
+export const DEFAULT_VANILLAJS_CODESANDBOX: CodeSandboxTemplate = (userDependencies = [], files = {}) => {
     return {
         template: "parcel",
         files: {

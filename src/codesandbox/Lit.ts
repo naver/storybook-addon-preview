@@ -18,4 +18,4 @@ export const DEFAULT_LIT_CODESANDBOX: CodeSandboxTemplate = (userDependencies = 
         },
         userDependencies,
     };
-}
+};

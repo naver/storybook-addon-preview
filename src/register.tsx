@@ -7,7 +7,7 @@ import { addons, types } from "@storybook/addons";
 import { AddonPanel } from "@storybook/components";
 import PreviewPanel from "./PreviewPanel";
 
-addons.register("naver/storyboook-addon-preview", api => {
+addons.register("naver/storyboook-addon-preview", () => {
     addons.add("naver/storyboook-addon-preview/panel", {
         title: "Code Preview",
         type: types.PANEL,
