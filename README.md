@@ -520,7 +520,6 @@ import {
 * `template` is based on [this](https://github.com/codesandbox/codesandbox-importers/blob/master/packages/import-utils/src/create-sandbox/templates.ts#L63) logic.
 * `dependencies`, `devDependencies`, `scripts` are based on `package.json`'s `dependencies`, `devDependencies`, `scripts`
 * `userDependencies` are dependencies of type array. ([`vue@^2.6.0`])
-* `scripts`
 * `files` has string, [CodeFileTab(object)](https://github.com/naver/storybook-addon-preview/blob/master/src/types.ts), and null types.
     * CodeFileTab: Returns the preview tab as a string value.
     * null: Delete the existing file.
@@ -555,6 +554,13 @@ new Vue({
 };
 
 ```
+
+
+## Contributing
+See [CONTRIBUTING.md](https://github.com/naver/storybook-addon-preview/blob/master/CONTRIBUTING.md).
+
+
+
 ## License
 **storybook-addon-preview** is released under the [MIT license](https://raw.githubusercontent.com/naver/egjs/master/LICENSE.txt).
 

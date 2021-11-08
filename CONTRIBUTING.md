@@ -13,7 +13,6 @@ Before your start, please read attentively below instructions.
 * `template` is based on [this](https://github.com/codesandbox/codesandbox-importers/blob/master/packages/import-utils/src/create-sandbox/templates.ts#L63) logic.
 * `dependencies`, `devDependencies`, `scripts` are based on `package.json`'s `dependencies`, `devDependencies`, `scripts`
 * `userDependencies` are dependencies of type array. ([`vue@^2.6.0`])
-* `scripts`
 * `files` has string, [CodeFileTab(object)](https://github.com/naver/storybook-addon-preview/blob/master/src/types.ts), and null types.
     * CodeFileTab: Returns the preview tab as a string value.
     * null: Delete the existing file.
@@ -21,6 +20,8 @@ Before your start, please read attentively below instructions.
 
 1. You can add CodeSandbox to the `src/codesandbox` folder.
 2. The name should be something like `DEFAULT_$$$$_CODESANDBOX` ex) DEFAULT_VUE_CODESANDBOX.
+3. The function is of type `CodeSandboxTemplate`. You must use the user-specified `useDependencies` and `files`.
+4. `files` must have basic files for CodeSandbox to run.
 
 ```js
 import { CodeSandboxTemplate } from "../types";
