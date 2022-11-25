@@ -1,27 +1,24 @@
 import * as React from "react";
-import { useArgs, useParameter, useChannel } from "@storybook/api";
+import { useArgs, useParameter, useChannel, useGlobals } from "@storybook/api";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import * as Prism from "prismjs";
-
-import "prismjs/components/prism-typescript";
-import "prismjs/components/prism-jsx";
-import "prismjs/components/prism-tsx";
+import { SyntaxHighlighter } from "@storybook/components";
+import addons from "@storybook/addons";
 
 import "react-tabs/style/react-tabs.css";
-import "prismjs/themes/prism.css";
-import "prismjs/plugins/line-numbers/prism-line-numbers";
-import "prismjs/plugins/line-numbers/prism-line-numbers.css";
-import "prismjs/plugins/line-highlight/prism-line-highlight";
-import "prismjs/plugins/line-highlight/prism-line-highlight.css";
 import "./css/preview.css";
-import "./css/prism-dark.css";
 
 import CodeSandBox from "./CodeSandBox";
 import CopyButton from "./CopyButton";
 import { getHighlightInfo } from "./utils";
+import { ParsedPreviewParameter, PreviewParameter } from "./types";
 
 
-function processArrayTemplate([strings, values]: any[], props: { [key: string]: any }) {
+
+function processArrayTemplate(
+    [strings, values]: any[],
+    props: Record<string, any>,
+    globals: Record<string, any>,
+) {
     return strings.reduce((prev, next, i) => {
         let name = values[i];
 
@@ -33,11 +30,11 @@ function processArrayTemplate([strings, values]: any[], props: { [key: string]: 
         if (name) {
             if (typeof name === "function") {
                 try {
-                    value = name(props);
+                    value = name(props, globals);
                 } catch (e) { }
             }
             if (Array.isArray(name)) {
-                value = processArrayTemplate(name, props);
+                value = processArrayTemplate(name, props, globals);
             } else if (name in props) {
                 value = JSON.stringify(props[name]);
             }
@@ -45,25 +42,34 @@ function processArrayTemplate([strings, values]: any[], props: { [key: string]: 
         return prev + next + value;
     }, "");
 }
-function getInfo(options, preview) {
+
+function getInfo(
+    options: PreviewParameter,
+    props: Record<string, any>,
+    globals: Record<string, any>,
+): PreviewParameter & { text: string } {
     const {
         template,
         description = "",
         tab = "Code",
         language = "javascript",
+        args,
+        knobs,
     } = options;
+    const nextProps = { ...props, ...(knobs || {}), ...(args || {}) };
+
     let text = "";
 
     if (typeof template === "string") {
         text = template;
     } else if (typeof template === "function") {
         try {
-            text = template(preview);
+            text = template(nextProps, globals);
         } catch (e) {
             text = "";
         }
     } else if (Array.isArray(template)) {
-        text = processArrayTemplate(template, preview);
+        text = processArrayTemplate(template, nextProps, globals);
     }
 
     return {
@@ -76,41 +82,44 @@ function getInfo(options, preview) {
 }
 
 const PreviewPanel = () => {
-    const [args, updateArgs] = useArgs();
+    const [globals] = useGlobals();
+    const [args] = useArgs();
     const [userKnobs, setKnobs] = React.useState({});
     const [preview, setPreview] = React.useState<object>();
     const [tabIndexInfo, setTabIndexInfo] = React.useState({
         index: 0,
     });
+    const previewFormatter = addons.getConfig().previewFormatter;
+
     const options = [].concat(useParameter("preview", []));
     const panelRef = React.useRef<HTMLDivElement>();
     const props = { ...(userKnobs || {}), ...(args || {}), ...preview };
 
     useChannel({
         "preview": e => {
+            // change preview parameter
             setPreview(e);
         },
-        "args": e => {
-            updateArgs(e);
-            setPreview(undefined);
+        "args": () => {
+            // change args parameter
+            setPreview({});
         },
         "knobs": e => {
+            // change knobs parameter
             setKnobs(e);
-            setPreview(undefined);
+            setPreview({});
         },
-    });
-    options.forEach(o => {
-        const option = o.args || o.knobs;
-        for (const name in option) {
-            props[name] = option[name];
-        }
     });
     const templates = options
         .filter(option => "template" in option)
-        .map(option => getInfo(option, props || {}));
+        .map(option => getInfo(option, props || {}, globals));
 
-    const previews = [];
-    const templateMap = {};
+    const previews: Array<PreviewParameter & {
+        templates: ParsedPreviewParameter[],
+    }> = [];
+
+    const previewMap: Record<string, string[]> = {};
+    const templateMap: Record<string, ParsedPreviewParameter[]> = {};
 
     templates.forEach(template => {
         const { tab, codesandbox } = template;
@@ -124,8 +133,6 @@ const PreviewPanel = () => {
         }
         templateMap[tab].push(template);
     });
-
-    const previewMap = {};
 
     for (const name in templateMap) {
         previewMap[name] = templateMap[name].map(template => template.text);
@@ -154,45 +161,6 @@ const PreviewPanel = () => {
 
         return texts.join("\n");
     };
-    React.useEffect(() => {
-        const panelElement = panelRef.current;
-
-        if (!panelElement) {
-            return;
-        }
-        const codeElements = [].slice.call(panelElement.querySelectorAll("pre code"));
-        const p = previews[tabIndexInfo.index];
-        if (!p) {
-            codeElements.forEach(codeElement => {
-                codeElement.innerHTML = "";
-            });
-            return;
-        }
-        let startNumber = 1;
-
-        codeElements.forEach((codeElement, i) => {
-            const template = p.templates[i];
-            const text = template.text || "";
-            const code = text.replace(/</g, "&lt;");
-
-            if (!template.continue) {
-                startNumber = 1;
-            }
-            const {
-                lines: highlightLines,
-                code: nextCode,
-            } = getHighlightInfo(code);
-
-
-            const preElement = codeElement.parentElement;
-            preElement.setAttribute("data-start", startNumber);
-            preElement.setAttribute("data-line", highlightLines.join(","));
-            codeElement.innerHTML = nextCode;
-
-            Prism.highlightElement(codeElement);
-            startNumber += code.split("\n").length;
-        });
-    });
     if (!previews.length) {
         return <div className="no-preview">
             <h4 className="no-preview-title">No Preview found</h4>
@@ -214,15 +182,53 @@ const PreviewPanel = () => {
             </TabList>
 
             {previews.map(({ codesandbox, tab, templates: previewTemplates }, i) => {
+                let nextStartNumber = 1;
+
                 return (<TabPanel key={tab}>
                     <div className="panel" ref={panelRef}>
                         {codesandbox && <CodeSandBox info={typeof codesandbox === "function"
                             ? codesandbox(previewMap)
                             : codesandbox} previews={previewMap} />}
-                        {previewTemplates.map(({ language, description, copy }, j) => {
+                        {previewTemplates.map(({
+                            language,
+                            description,
+                            copy,
+                            text,
+                            continue: isContinue,
+                            format,
+                        }, j) => {
+                            if (!isContinue) {
+                                nextStartNumber = 1;
+                            }
+                            const startNumber = nextStartNumber;
+                            const {
+                                lines: highlightLines,
+                                code: nextCode,
+                            } = getHighlightInfo(previewFormatter && format ? previewFormatter(format, text) : text);
+
+                            nextStartNumber += nextCode.split("\n").length;
                             return <div className="code-preview" key={j}>
                                 {copy && <CopyButton tab={i} index={j} onCopyText={onCopyText} />}
                                 {description && <div className="code-description">{description}</div>}
+                                <SyntaxHighlighter
+                                    language={language}
+                                    showLineNumbers={true}
+                                    startingLineNumber={startNumber}
+                                    format={previewFormatter ? false : format || false}
+                                    wrapLines={true}
+                                    lineProps={lineNumber => {
+                                        const style: Record<string, any> = {
+                                            display: "block",
+                                        };
+
+                                        if (highlightLines.some(([start, end]) => {
+                                            return start <= lineNumber && lineNumber <= end;
+                                        })) {
+                                            style.backgroundColor = `rgb(219, 255, 219)`;
+                                        }
+                                        return { style };
+                                    }}
+                                >{nextCode}</SyntaxHighlighter>
                                 <pre className={`language-${language} line-numbers`} style={{
                                     backgroundColor: "transparent",
                                 }}><code className={`language-${language} line-numbers`}></code></pre>

@@ -29,12 +29,22 @@ export function raw(name: string) {
     `);
 }
 
+export function global(name: string) {
+    return new Function(`
+        var globals = arguments[1];
+
+        return globals[${JSON.stringify(name)}];
+    `);
+}
+
+
 export function previewTemplate(strings: TemplateStringsArray, ...values: any[]) {
     return [strings, values];
 }
 
 previewTemplate.object = OBJECT_TEMPLATE;
 previewTemplate.raw = raw;
+previewTemplate.global = global;
 
 export const withPreview = makeDecorator({
     name: 'withPreview',
