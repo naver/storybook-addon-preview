@@ -75,7 +75,7 @@ example.argTypes = {
     },
 };
 ```
-### How to use with knobs
+### How to use with knobs (deprecated)
 * [Install @storybook/addon-knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs)
 ```js
 import { withPreview, previewTemplate, DEFAULT_VANILLA_CODESANDBOX } from "storybook-addon-preview";

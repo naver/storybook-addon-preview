@@ -60,6 +60,7 @@ export interface PreviewParameter {
     description?: string;
     /**
      * Custom args or knobs that can be used in the preview template.
+     * @deprecated
      */
     knobs?: Record<string, any>;
     /**
