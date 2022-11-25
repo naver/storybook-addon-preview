@@ -235,6 +235,27 @@ addons.setConfig({
 });
 ```
 
+```js
+// stories.js
+
+export const Story = {
+    parameters: {
+        preview: [
+            {
+                tab: "Vanilla",
+                template: `
+const inst = new Instance({
+    opt1: "opt1",
+    num1: "num1",
+});
+                `,
+                language: "ts",
+                format: "tsx",
+            },
+        ],
+    }
+}
+```
 
 ### Template
 * If the template is code that does not use knobs, you can just write it as `string` type.
