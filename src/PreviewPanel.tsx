@@ -47,7 +47,7 @@ function getInfo(
     options: PreviewParameter,
     props: Record<string, any>,
     globals: Record<string, any>,
-): PreviewParameter & { text: string } {
+): ParsedPreviewParameter {
     const {
         template,
         description = "",
