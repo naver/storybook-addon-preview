@@ -1,6 +1,6 @@
 import * as React from "react";
 import { withPreview } from "storybook-addon-preview";
-import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
+import { withKnobs, text } from '@storybook/addon-knobs';
 
 
 export default {
@@ -23,6 +23,7 @@ Template.parameters = {
                 return `<div>${knobs.title}</div>`;
             },
             language: "tsx",
+            format: "tsx",
         },
     ],
 };
