@@ -6,7 +6,7 @@ import * as postCSSParser from "prettier/parser-postcss";
 
 
 addons.setConfig({
-    panelPostion: "right",
+    panelPosition: "right",
     previewFormatter: (format, code) => {
         if (format === "tsx") {
             return prettier.format(code, {

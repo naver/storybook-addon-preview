@@ -31,10 +31,8 @@
     ],
     "homepage": "https://github.com/naver/storybook-addon-preview#readme",
     "dependencies": {
-        "@types/prismjs": "^1.16.0",
         "@types/react-tabs": "^2.3.2",
         "codesandbox": "^2.1.10",
-        "prismjs": "^1.17.1",
         "react-tabs": "^3.0.0",
         "@storybook/addon-knobs": "^6.0.0"
     },
