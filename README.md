@@ -75,7 +75,7 @@ example.argTypes = {
     },
 };
 ```
-### How to use with knobs
+### How to use with knobs (deprecated)
 * [Install @storybook/addon-knobs](https://github.com/storybookjs/storybook/tree/master/addons/knobs)
 ```js
 import { withPreview, previewTemplate, DEFAULT_VANILLA_CODESANDBOX } from "storybook-addon-preview";
@@ -137,19 +137,125 @@ export const example = e => {
 ```
 
 
-[InfiniteGrid's Storybook Example](https://github.com/naver/egjs-infinitegrid/blob/master/storybook/stories/templates/story.template.tsx)
+[InfiniteGrid's Storybook Example](https://github.com/naver/egjs-infinitegrid/blob/master/packages/infinitegrid/stories/templates/preview.ts)
 
 ### Properties
 
-|Name|Type|Description|
-|---|---|---|
-|tab|string|preview can show multiple tab and can determine the name of the tab. If you have the same name, you can show multiple codes on one tab.|
-|template|string, function, template|Code to display on the screen. If you use knobs, use previewTemplate. If the knobs are not used, they can be represented as strings.|
-|args or knobs|object|Custom args or knobs to use in preview templates, except those used in stories,|
-|continue|boolean|If the tab name is the same and the code is different, enable true if you want to continue the line number.|
-|language|string|Language to highlight the code in the template (js, ts, jsx, tsx, html, css)|
-|codesandbox|function|Link the code you used to the code sandbox.|
-|copy|boolean|Whether to show the copy code button|
+```ts
+export interface PreviewParameter {
+    /**
+     * The name of the tab to appear in the preview panel
+     */
+    tab?: string;
+    /**
+     * Code to appear in the corresponding tab of the preview panel.
+     */
+    template?: string
+    | ((props: Record<string, any>, globals: Record<string, any>) => any)
+    | ReturnType<typeof previewTemplate>;
+    /**
+     * Description of the corresponding template code
+     */
+    description?: string;
+    /**
+     * Custom args or knobs that can be used in the preview template.
+     */
+    knobs?: Record<string, any>;
+    /**
+     * Custom args or knobs that can be used in the preview template.
+     */
+    args?: Record<string, any>;
+    /**
+     * Whether to display the copy button
+     */
+    copy?: boolean;
+    /**
+     * Language to highlight its code ("html", "css", "jsx", "tsx", "ts", "js")
+     */
+    language?: string;
+    /**
+     * Language presets to link to codesandbox
+     * @see {@link https://github.com/naver/storybook-addon-preview/blob/master/README.md}
+     */
+    codesandbox?: CodeSandboxValue
+    | ((previewMap: Record<string, string[]>) => CodeSandboxValue);
+    /**
+     * Whether to share line numbers when tab names are the same
+     */
+    continue?: boolean;
+    /**
+     * Formatting type for that code if you want formatting
+     * Only "html" is supported as built-in support.
+     * If you want to use custom formatter, use `previewFormatter` config in manager.js
+     * @see {@link https://github.com/naver/storybook-addon-preview/blob/master/README.md}
+     */
+    format?: string | boolean;
+}
+```
+
+### Formatting
+Storybook basically uses the standalone version of `prettier` and `parser-html`.
+So PreviewParameter format only supports "html".
+
+If you use a custom formatter, be careful as the file size may increase.
+
+See: https://prettier.io/docs/en/browser.html
+
+```js
+// .storybook/manager.js
+import { addons } from "@storybook/addons";
+import * as prettier from "prettier/standalone";
+import * as htmlParser from "prettier/parser-html";
+import * as babelParser from "prettier/parser-babel";
+import * as postCSSParser from "prettier/parser-postcss";
+
+addons.setConfig({
+    previewFormatter: (format, code) => {
+        if (format === "tsx") {
+            return prettier.format(code, {
+                parser: "babel-ts",
+                plugins: [
+                    htmlParser,
+                    babelParser,
+                    postCSSParser,
+                ],
+            });
+        } else if (format === "vue") {
+            return prettier.format(code, {
+                parser: "vue",
+                plugins: [
+                    htmlParser,
+                    babelParser,
+                    postCSSParser,
+                ],
+            });
+        }
+        return code;
+    },
+});
+```
+
+```js
+// stories.js
+
+export const Story = {
+    parameters: {
+        preview: [
+            {
+                tab: "Vanilla",
+                template: `
+const inst = new Instance({
+    opt1: "opt1",
+    num1: "num1",
+});
+                `,
+                language: "ts",
+                format: "tsx",
+            },
+        ],
+    }
+}
+```
 
 ### Template
 * If the template is code that does not use knobs, you can just write it as `string` type.
@@ -186,11 +292,11 @@ const inst = new Instance({
     args: {
         args1: true,
     },
-    template: knobs => `
+    template: (props, globals) => `
 const inst = new Instance({
-    opt1: ${knobs.opt1},
-    num1: ${knobs.num1},
-    args1: ${knobs.args1},
+    opt1: ${props.opt1},
+    num1: ${props.num1},
+    args1: ${props.args1},
 });
 `,
 }

@@ -22,7 +22,7 @@ export function getHighlightInfo(code: string) {
         nextLine = line.replace(/\/\/\s*\[highlight\]/g, "//");
 
         if (nextLine !== line) {
-            highlightLines.push([i + 1]);
+            highlightLines.push([i + 1, i + 1]);
             return nextLine;
         }
         nextLine = line
@@ -52,7 +52,7 @@ export function getHighlightInfo(code: string) {
     nextCodes.length = codes.length;
 
     return {
-        lines: highlightLines.map(line => line.join("-")),
+        lines: highlightLines,
         code: nextCodes.join("\n"),
     };
 }
