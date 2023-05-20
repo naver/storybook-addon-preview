@@ -4,7 +4,7 @@
         "esModuleInterop": false,
         "sourceMap": true,
         "module": "commonjs",
-        "target": "es3",
+        "target": "ESNext",
         "experimentalDecorators": true,
         "skipLibCheck": true,
         "declaration": true,
