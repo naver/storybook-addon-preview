@@ -8,8 +8,8 @@
     "scripts": {
         "lint": "eslint ./src/ --ext .ts,.tsx",
         "build": "rm -rf ./dist && npm run build:cjs && npm run build:esm",
-        "build:cjs": "tsc -p tsconfig.json && cpx 'src/css/*.css' 'dist/css'",
-        "build:esm": "tsc -p tsconfig.esm.json && cpx 'src/css/*.css' 'dist/esm/css'"
+        "build:cjs": "tsup src/index.tsx --format cjs --dts  && cpx 'src/css/*.css' 'dist/css'",
+        "build:esm": "tsup src/index.tsx --format esm --dts --outDir ./dist/esm  && cpx 'src/css/*.css' 'dist/esm/css'"
     },
     "repository": {
         "type": "git",
@@ -31,10 +31,10 @@
     ],
     "homepage": "https://github.com/naver/storybook-addon-preview#readme",
     "dependencies": {
+        "@storybook/addon-knobs": "^6.0.0",
         "@types/react-tabs": "^2.3.2",
         "codesandbox": "^2.1.10",
-        "react-tabs": "^3.0.0",
-        "@storybook/addon-knobs": "^6.0.0"
+        "react-tabs": "^3.0.0"
     },
     "devDependencies": {
         "@storybook/addons": "^6.0.21",
@@ -42,14 +42,18 @@
         "@storybook/components": "^6.0.21",
         "@types/node": "^12.12.7",
         "@types/react": "^16.9.11",
-        "cpx": "^1.5.0",
-        "react": "^16.11.0",
-        "tslint": "^6.0.0",
-        "typescript": "^3.7.2",
         "@typescript-eslint/eslint-plugin": "^3.9.1",
         "@typescript-eslint/parser": "^3.9.1",
+        "cpx": "^1.5.0",
         "eslint": "^7.7.0",
         "eslint-plugin-import": "^2.22.1",
-        "eslint-plugin-react": "^7.22.0"
+        "eslint-plugin-react": "^7.22.0",
+        "react": "^18.2.0",
+        "tslint": "^6.0.0",
+        "tsup": "^6.7.0",
+        "typescript": "^5.0.4"
+    },
+    "peerDependencies": {
+        "react": "^16.8.0 || ^17.0.0 || ^18.0.0"
     }
 }
