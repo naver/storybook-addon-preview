@@ -2,7 +2,7 @@ import * as React from "react";
 import { useArgs, useParameter, useChannel, useGlobals } from "@storybook/api";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import { SyntaxHighlighter } from "@storybook/components";
-import addons from "@storybook/addons";
+import {addons} from "@storybook/addons";
 
 import "react-tabs/style/react-tabs.css";
 import "./css/preview.css";
