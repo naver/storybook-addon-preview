@@ -2,7 +2,7 @@
  * Copyright (c) 2020-present NAVER Corp.
  * egjs projects are licensed under the MIT license
  */
-import addons, { makeDecorator, useChannel } from '@storybook/addons';
+import { addons, makeDecorator, useChannel } from '@storybook/addons';
 import { RESET, SET } from "@storybook/addon-knobs";
 import { OBJECT_TEMPLATE } from './props';
 
